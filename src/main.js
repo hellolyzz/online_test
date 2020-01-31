@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+// 引入全局样式
+import './assets/css/global.css'
 // 引入element-ui组件
-import '../plugins/element.js'
+import './plugins/element.js'
 // 引入axios
 import axios from 'axios'
 // 请求的根路径
