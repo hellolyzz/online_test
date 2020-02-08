@@ -61,6 +61,7 @@ export default {
     this.getInfo();
   },
   methods: {
+    // 获取用户信息
     async getInfo() {
       var id = window.sessionStorage.getItem('id')
       console.log(id)

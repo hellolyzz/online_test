@@ -6,6 +6,8 @@ import welcome from '../components/welcome.vue'
 import introduceTest from '../components/testMng/introduceTest.vue'
 import setting from '../components/setting.vue'
 import stuMng from '../components/ppMng/stuMng.vue'
+import teaMng from '../components/ppMng/teaMng.vue'
+
 
 Vue.use(VueRouter)
 
@@ -34,6 +36,9 @@ const routes = [
       {
         path: '/stuMng',
         component: stuMng
+      },{
+        path: '/teaMng',
+        component: teaMng
       }
     ]
   }

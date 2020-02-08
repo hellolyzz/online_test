@@ -8,7 +8,7 @@ import './plugins/element.js'
 // 引入axios
 import axios from 'axios'
 // 请求超时
-axios.defaults.timeout = 5000 
+axios.defaults.timeout = 6000 
 // 请求的根路径
 axios.defaults.baseURl = 'http://127.0.0.1:3000'
 // 通过http发起请求

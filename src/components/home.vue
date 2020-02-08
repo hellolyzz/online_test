@@ -142,7 +142,7 @@ export default {
             {
               menuName: "教师管理",
               id: 402,
-              path: "teacherMng"
+              path: "teaMng"
             }
           ]
         }
