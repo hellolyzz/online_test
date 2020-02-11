@@ -8,8 +8,16 @@
           <span>在线测试平台管理后台</span>
         </div>
         <div>
-          <el-button type="primary" @click="setting" size="mini">设置</el-button>
+          <div class="welcomeText">欢迎你,{{ userName }}</div>
+          <el-button type="primary" @click="setting" size="mini">设置</el-button> 
           <el-button type="info" @click="logout" size="mini">退出</el-button>
+          <!-- <el-dropdown >
+            <el-button type="primary">设置</el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>修改个人信息</el-dropdown-item>
+              <el-dropdown-item @click="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown> -->
         </div>
       </el-header>
 
@@ -63,6 +71,7 @@
 export default {
   data() {
     return {
+      userName: '',
       isCollapse: false,
       activePath: "",
       iconsObj: {
@@ -105,13 +114,13 @@ export default {
             {
               menuName: "所有题库",
               id: 202,
-              path: "allQuesBank"
+              path: "allTestInfo"
             },
-            {
-              menuName: "增加题库",
-              id: 203,
-              path: "addQuesBank"
-            }
+            // {
+            //   menuName: "增加题库",
+            //   id: 203,
+            //   path: "addQuesBank"
+            // }
           ]
         },
         {
@@ -150,9 +159,14 @@ export default {
     };
   },
   created() {
+    this.getInfo()
     // this.activePath = window.sessionStorage.getItem("activePath");
   },
   methods: {
+    getInfo(){
+      this.userName = window.sessionStorage.getItem("name")
+      console.log(this.userName)
+    },
     setting() {
       this.$router.push("/setting");
     },
@@ -218,5 +232,9 @@ export default {
 }
 .el-main {
   background-color: #eaedf1;
+}
+.welcomeText{
+  font-size: 15px;
+  margin-right: 20px;
 }
 </style>

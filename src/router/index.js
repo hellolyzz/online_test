@@ -5,9 +5,12 @@ import home from '../components/home.vue'
 import welcome from '../components/welcome.vue'
 import introduceTest from '../components/testMng/introduceTest.vue'
 import setting from '../components/setting.vue'
-import stuMng from '../components/ppMng/stuMng.vue'
-import teaMng from '../components/ppMng/teaMng.vue'
-
+import stuMng from '../components/peopleMng/stuMng.vue'
+import teaMng from '../components/peopleMng/teaMng.vue'
+import allTestInfo from '../components/questionBankMng/allTestInfo.vue'
+import quesBank from '../components/questionBankMng/quesBank.vue'
+import addQuesBank from '../components/questionBankMng/addQuesBank.vue'
+import student from '../components/student/student.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +18,11 @@ const routes = [
   {
     path: '/login',
     component: login
+  },
+  // 学生界面
+  {
+    path: '/student',
+    component: student
   },
   {
     path: '/home',
@@ -39,9 +47,23 @@ const routes = [
       },{
         path: '/teaMng',
         component: teaMng
+      },
+      {
+        path: '/allTestInfo',
+        component: allTestInfo
+      },
+      {
+        path: '/quesBank',
+        component: quesBank
+      },
+      {
+        path: '/addQuesBank',
+        component: addQuesBank
       }
     ]
   }
+
+
   // {
   //   path: '/about',
   //   name: 'about',

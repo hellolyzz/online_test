@@ -20,7 +20,16 @@ import { Button,
   Select,
   Option,
   Pagination,
-  MessageBox
+  MessageBox,
+  ButtonGroup,
+  Tabs,
+  TabPane,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Radio,
+  RadioButton,
+  RadioGroup
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -43,5 +52,14 @@ Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Pagination)
+Vue.use(ButtonGroup)
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Radio)
+Vue.use(RadioButton)
+Vue.use(RadioGroup)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

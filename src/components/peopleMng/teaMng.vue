@@ -157,6 +157,12 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
+         gender: [
+           { required: true, message: "请选择性别", trigger: ["blur", "change"] },
+        ],
+        institute: [
+           { required: true, message: "请选择所在学院", trigger: ["blur", "change"] },
+        ],
         tel: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
           {

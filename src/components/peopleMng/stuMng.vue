@@ -256,6 +256,15 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
+        grade: [
+           { required: true, message: "请选择所在年级", trigger: ["blur", "change"] },
+        ],
+        gender: [
+           { required: true, message: "请选择性别", trigger: ["blur", "change"] },
+        ],
+        institute: [
+           { required: true, message: "请选择所在学院", trigger: ["blur", "change"] },
+        ],
         class: [
           { required: true, message: "请输入所在班级", trigger: "blur" },
           {
