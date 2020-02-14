@@ -11,6 +11,7 @@ import allTestInfo from '../components/questionBankMng/allTestInfo.vue'
 import quesBank from '../components/questionBankMng/quesBank.vue'
 import addQuesBank from '../components/questionBankMng/addQuesBank.vue'
 import student from '../components/student/student.vue'
+import addTest from '../components/testMng/addTest'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,9 @@ const routes = [
       {
         path: '/addQuesBank',
         component: addQuesBank
+      },{
+        path: '/addTest',
+        component: addTest
       }
     ]
   }
