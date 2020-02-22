@@ -54,7 +54,15 @@
               <el-input v-model="multiForm.optionD"></el-input>
             </el-form-item>
             <el-form-item prop="answer" label="正确选项">
-              <el-input v-model="multiForm.answer"></el-input>
+              <!-- <el-input v-model="multiForm.answer"></el-input> -->
+              <el-select v-model="multiForm.answer">
+                <el-option
+                  v-for="item in multiOption"
+                  :key="item.value"
+                  :label="item.value"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item prop="level" label="难易等级">
               <!-- <el-input v-model="multiForm.level"></el-input> -->
@@ -97,8 +105,16 @@
             <el-form-item prop="question" label="题目">
               <el-input v-model="judgeForm.question"></el-input>
             </el-form-item>
-            <el-form-item prop="answer" label="答案（T/F）">
-              <el-input v-model="judgeForm.answer"></el-input>
+            <el-form-item prop="answer" label="答案">
+              <!-- <el-input v-model="judgeForm.answer"></el-input> -->
+              <el-select v-model="judgeForm.answer">
+                <el-option
+                  v-for="item in judgeOption"
+                  :key="item.value"
+                  :label="item.value"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item prop="level" label="难易等级">
               <!-- <el-input v-model="judgeForm.level"></el-input> -->
@@ -176,6 +192,34 @@ export default {
       totalF: 0,
       totalM: 0,
       totalJ: 0,
+      multiOption: [
+        {
+          label: "A",
+          value: "A"
+        },
+        {
+          label: "B",
+          value: "B"
+        },
+        {
+          label: "C",
+          value: "C"
+        },
+        {
+          label: "D",
+          value: "D"
+        }
+      ],
+      judgeOption: [
+        {
+          label: "T",
+          value: "T"
+        },
+        {
+          label: "F",
+          value: "F"
+        }
+      ],
       activeName: "first",
       multiForm: {},
       judgeForm: {},
@@ -192,14 +236,15 @@ export default {
         questionId: [
           {
             required: true,
-            message: "请输入题号，建议以试卷编号开头编写题号，防止重复",
+            message:
+              "请输入题号，建议以试卷编号开头编写题号，防止重复。试卷编号：1003。试题编号：100301",
             trigger: ["blur", "change"]
           },
           {
-            min: 1,
-            max: 4,
+            min: 6,
+            max: 6,
             trigger: ["blur", "change"],
-            message: "长度在 1 到 4 个字符"
+            message: "长度在 6 个字符"
           }
         ],
         section: [
@@ -243,7 +288,7 @@ export default {
         answer: [
           {
             required: true,
-            message: "请输入正确答案的选项",
+            message: "请选择正确答案",
             trigger: ["blur", "change"]
           }
         ],
@@ -251,6 +296,13 @@ export default {
           {
             required: true,
             message: "请选择难易程度",
+            trigger: ["blur", "change"]
+          }
+        ],
+        analysis: [
+          {
+            required: true,
+            message: "请输入题目解析，若无则输入“无”",
             trigger: ["blur", "change"]
           }
         ]
@@ -266,14 +318,15 @@ export default {
         questionId: [
           {
             required: true,
-            message: "请输入题号，建议以试卷编号开头编写题号，防止重复",
+            message:
+              "请输入题号，建议以试卷编号开头编写题号，防止重复。试卷编号：1003。试题编号：100301",
             trigger: ["blur", "change"]
           },
           {
-            min: 1,
-            max: 4,
+            min: 6,
+            max: 6,
             trigger: ["blur", "change"],
-            message: "长度在 1 到 4 个字符"
+            message: "长度在 6 个字符"
           }
         ],
         section: [
@@ -289,7 +342,7 @@ export default {
         answer: [
           {
             required: true,
-            message: "请输入正确答案的选项（T/F）",
+            message: "请选择正确答案的选项",
             trigger: ["blur", "change"]
           }
         ],
@@ -297,6 +350,13 @@ export default {
           {
             required: true,
             message: "请选择难易程度",
+            trigger: ["blur", "change"]
+          }
+        ],
+        analysis: [
+          {
+            required: true,
+            message: "请输入题目解析，若无则输入“无”",
             trigger: ["blur", "change"]
           }
         ]
@@ -312,14 +372,15 @@ export default {
         questionId: [
           {
             required: true,
-            message: "请输入题号，建议以试卷编号开头编写题号，防止重复",
+            message:
+              "请输入题号，建议以试卷编号开头编写题号，防止重复。试卷编号：1003。试题编号：100301",
             trigger: ["blur", "change"]
           },
           {
-            min: 1,
-            max: 4,
+            min: 6,
+            max: 6,
             trigger: ["blur", "change"],
-            message: "长度在 1 到 4 个字符"
+            message: "长度在 6 个字符"
           }
         ],
         section: [
@@ -335,7 +396,7 @@ export default {
         answer: [
           {
             required: true,
-            message: "请输入正确答案的选项（T/F）",
+            message: "请输入正确答案",
             trigger: ["blur", "change"]
           }
         ],
@@ -343,6 +404,13 @@ export default {
           {
             required: true,
             message: "请选择难易程度",
+            trigger: ["blur", "change"]
+          }
+        ],
+        analysis: [
+          {
+            required: true,
+            message: "请输入题目解析，若无则输入“无”",
             trigger: ["blur", "change"]
           }
         ]
@@ -386,7 +454,7 @@ export default {
       this.totalF = res.data.totalF;
     },
     multiFormReset() {
-      this.$refs.multiFormRef.resetFields()
+      this.$refs.multiFormRef.resetFields();
       // console.log('reset')
     },
     judgeFormReset() {
@@ -407,11 +475,15 @@ export default {
           }
         );
         console.log(res);
-        if (res.meta.status === 401) return this.$message.error("增加选择题失败，请检查题号是否重复！");
-        if (res.meta.status === 402) return this.$message.error(res.meta.message);
+        if (res.meta.status === 401)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 402)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 403)
+          return this.$message.error(res.meta.message);
         this.$message.success("增加选择题成功");
-        this.$refs.multiFormRef.resetFields()
-        this.getNumberQ()
+        this.$refs.multiFormRef.resetFields();
+        this.getNumberQ();
       });
     },
     addJudgeQ() {
@@ -426,16 +498,20 @@ export default {
           }
         );
         console.log(res);
-        if (res.meta.status === 401) return this.$message.error("增加判断题失败，请检查题号是否重复！");
-        if (res.meta.status === 402) return this.$message.error(res.meta.message);
+        if (res.meta.status === 401)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 402)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 403)
+          return this.$message.error(res.meta.message);
         this.$message.success("增加判断题成功");
-        this.$refs.judgeFormRef.resetFields()
-        this.getNumberQ()
-      })
+        this.$refs.judgeFormRef.resetFields();
+        this.getNumberQ();
+      });
     },
     addFillQ() {
       // console.log("fill");
-       this.$refs.fillFormRef.validate(async valid => {
+      this.$refs.fillFormRef.validate(async valid => {
         if (!valid) return;
         const { data: res } = await this.$http.post(
           "http://localhost:3000/ques/addFill",
@@ -445,19 +521,23 @@ export default {
           }
         );
         console.log(res);
-        if (res.meta.status === 401) return this.$message.error("增加填空题失败，请检查题号是否重复！");
-        if (res.meta.status === 402) return this.$message.error(res.meta.message);
+        if (res.meta.status === 401)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 402)
+          return this.$message.error(res.meta.message);
+        if (res.meta.status === 403)
+          return this.$message.error(res.meta.message);
         this.$message.success("增加填空题成功");
-        this.$refs.fillFormRef.resetFields()
-        this.getNumberQ()
-      })
+        this.$refs.fillFormRef.resetFields();
+        this.getNumberQ();
+      });
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-li{
+li {
   list-style: none;
 }
 .footer {

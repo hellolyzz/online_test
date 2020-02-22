@@ -6,10 +6,11 @@
       <el-breadcrumb-item :to="{ path: '/welcome' }">人员管理</el-breadcrumb-item>
       <el-breadcrumb-item>教师管理</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card>
-      <el-button type="primary" @click="addTeaDialog = true">添加教师</el-button>
+    <!-- 管理员0 登录进来才可以看 -->
+    <el-card v-if="role === '0'">
+      <el-button type="primary" @click="addTeaDialog = true" >添加教师</el-button>
       <!-- 教师信息展示区域 -->
-      <el-table :data="tableData" border style="width: 100%" show-index>
+      <el-table :data="tableData" border style="width: 100%" show-index >
         <!-- <el-table-column type="index" label="#"></el-table-column> -->
         <el-table-column prop="id" label="工号" width="75"></el-table-column>
         <el-table-column prop="name" label="姓名" width="100"></el-table-column>
@@ -44,6 +45,12 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
+    </el-card>
+    <!-- 普通教师1 权限 -->
+    <el-card class="showInfo" v-else>
+      <div>
+        您的身份是教师，暂无权限查看教师列表。只有管理员才能查看。
+      </div> 
     </el-card>
      <!-- 新增教师对话框 -->
     <el-dialog title="新增教师" :visible.sync="addTeaDialog" width="50%" @close="closeAddTeaFormDialog">
@@ -237,7 +244,8 @@ export default {
         }
       ],
       // table数据源
-      tableData: []
+      tableData: [],
+      role: ''
     };
   },
   created() {
@@ -247,6 +255,8 @@ export default {
     // 获取教师信息
     async getTeaInfo() {
         console.log(this.queryInfo)
+        this.role = window.sessionStorage.getItem('role')
+        console.log(typeof(this.role))
         const { data: res } = await this.$http.get(
           'http://127.0.0.1:3000/teamng/teaInfo',
           {
@@ -371,5 +381,10 @@ export default {
 <style lang="less" scoped>
 .el-table {
   margin-top: 15px;
+}
+.showInfo{
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 </style>

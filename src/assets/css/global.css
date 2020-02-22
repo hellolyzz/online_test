@@ -12,3 +12,6 @@ html,body,#app{
   margin-top: 15px;
   width: 300px;
 }
+.el-card{
+  min-height: 480px;
+}

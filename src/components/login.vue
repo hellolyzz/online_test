@@ -6,14 +6,20 @@
         <img src="../assets/img/logo.jpg" alt />
       </div>
       <!-- 表单区域 -->
-      <el-form ref="loginFormRef" :rules="loginFormRules" :model="loginForm" class="login_form">
-        <el-form-item prop="id">
+      <el-form ref="loginFormRef" :rules="loginFormRules" :model="loginForm" class="login_form" label-width="80px">
+        <!-- <el-form-item prop="id">
           <el-input v-model="loginForm.id" prefix-icon="el-icon-user-solid"></el-input>
         </el-form-item>
         <el-form-item prop="pwd">
           <el-input v-model="loginForm.pwd" prefix-icon="el-icon-lock" type="password"></el-input>
+        </el-form-item> -->
+        <el-form-item prop="id" label="用户名">
+          <el-input v-model="loginForm.id" ></el-input>
         </el-form-item>
-        <el-form-item class="login_btn" prop="role" label="身份">
+        <el-form-item prop="pwd" label="密码">
+          <el-input v-model="loginForm.pwd" type="password"></el-input>
+        </el-form-item>
+        <el-form-item prop="role" label="身份">
           <el-select v-model="loginForm.role" >
             <el-option
               v-for="item in roleList"
@@ -57,7 +63,7 @@ export default {
         }
       ],
       loginForm: {
-        id: "200001",
+        id: "603131",
         pwd: "123456",
         role: ''
       },
@@ -85,7 +91,7 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         // console.log(valid)
         if (!valid) return;
-        console.log(this.loginForm)
+        // console.log(this.loginForm)
         const { data: res } = await this.$http.post(
           "http://127.0.0.1:3000/user",
           this.loginForm
@@ -99,10 +105,14 @@ export default {
         // 2. 通过编程式导航跳转到后台主页 地址/home
         // console.log(res)
         // 保存token
+        this.$store.dispatch('saveName', res.data.name)
         window.sessionStorage.setItem("token", res.data.token);
         window.sessionStorage.setItem("id", res.data.id);
         window.sessionStorage.setItem("role", res.data.role);
         window.sessionStorage.setItem("name", res.data.name);
+        window.sessionStorage.setItem("institute", res.data.institute);
+        window.sessionStorage.setItem("major", res.data.major);
+        window.sessionStorage.setItem("grade", res.data.grade);
         if (res.data.role === 2) {
           this.$router.push("/student");
         } else {

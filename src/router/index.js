@@ -12,6 +12,9 @@ import quesBank from '../components/questionBankMng/quesBank.vue'
 import addQuesBank from '../components/questionBankMng/addQuesBank.vue'
 import student from '../components/student/student.vue'
 import addTest from '../components/testMng/addTest'
+import searchTest from '../components/testMng/searchTest'
+import introduceQues from '../components/questionBankMng/introduceQues'
+import myTest from '../components/student/myTest'
 
 Vue.use(VueRouter)
 
@@ -23,7 +26,14 @@ const routes = [
   // 学生界面
   {
     path: '/student',
-    component: student
+    component: student,
+    redirect: '/myTest',
+    children: [
+      {
+        path: '/myTest',
+        component: myTest
+      }
+    ]
   },
   {
     path: '/home',
@@ -63,6 +73,14 @@ const routes = [
       },{
         path: '/addTest',
         component: addTest
+      },
+      {
+        path: '/searchTest',
+        component: searchTest
+      },
+      {
+        path: '/introduceQues',
+        component: introduceQues
       }
     ]
   }

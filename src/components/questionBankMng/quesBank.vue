@@ -23,7 +23,7 @@
 
       <!-- 选择题题目展示 -->
       <el-table :data="multiTableData" border style="width: 100%" v-if="type === 1">
-        <el-table-column fixed prop="questionId" label="题号" width="70"></el-table-column>
+        <el-table-column fixed prop="questionId" label="题号" width="80"></el-table-column>
         <el-table-column prop="question" label="题目" width="300"></el-table-column>
         <el-table-column prop="optionA" label="选项A" width="120"></el-table-column>
         <el-table-column prop="optionB" label="选项B" width="120"></el-table-column>
@@ -57,7 +57,7 @@
       ></el-pagination>
       <!-- 判断题题目展示 -->
       <el-table :data="judgeTableData" border style="width: 100%" v-if="type === 2">
-        <el-table-column fixed prop="questionId" label="题号" width="70"></el-table-column>
+        <el-table-column fixed prop="questionId" label="题号" width="80"></el-table-column>
         <el-table-column prop="question" label="题目" width="300"></el-table-column>
         <el-table-column prop="answer" label="正确答案" width="60">
           <template slot-scope="scope">
@@ -87,7 +87,7 @@
       ></el-pagination>
       <!-- 填空题题目展示 -->
       <el-table :data="fillTableData" border style="width: 100%" v-if="type === 3">
-        <el-table-column fixed prop="questionId" label="题号" width="70"></el-table-column>
+        <el-table-column fixed prop="questionId" label="题号" width="80"></el-table-column>
         <el-table-column prop="question" label="题目" width="300"></el-table-column>
         <el-table-column prop="answer" label="正确答案" width="250">
           <template slot-scope="scope">

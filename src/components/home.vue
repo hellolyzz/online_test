@@ -109,7 +109,7 @@ export default {
             {
               menuName: "功能介绍",
               id: 201,
-              path: "introducemng"
+              path: "introduceQues"
             },
             {
               menuName: "所有题库",
