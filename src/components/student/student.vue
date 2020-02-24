@@ -9,7 +9,7 @@
             <span>OnlineTest</span>
           </li>
           <li>
-            <el-button @click="exam()">我的试卷</el-button>
+            <el-button @click="toTestList">我的试卷</el-button>
           </li>
           <li>
             <el-button @click="practice()">我的练习</el-button>
@@ -72,7 +72,11 @@ export default {
       this.$router.push("/login");
     },
     setting(){
-      console.log('45')
+      // console.log('45')
+      this.$router.push('/stuSetting')
+    },
+    toTestList(){
+      this.$router.push('/myTest')
     }
   }
 };

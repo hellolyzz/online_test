@@ -15,6 +15,7 @@ import addTest from '../components/testMng/addTest'
 import searchTest from '../components/testMng/searchTest'
 import introduceQues from '../components/questionBankMng/introduceQues'
 import myTest from '../components/student/myTest'
+import stuSetting from '../components/student/stuSetting'
 
 Vue.use(VueRouter)
 
@@ -32,9 +33,14 @@ const routes = [
       {
         path: '/myTest',
         component: myTest
+      },
+      {
+        path: '/stuSetting',
+        component: stuSetting
       }
     ]
   },
+  // 管理后台
   {
     path: '/home',
     component: home,
