@@ -21,7 +21,7 @@
       <!-- 试卷 -->
       <ul class="paper">
         <li class="item" v-for="(item,index) in testInfo" :key="index">
-          <h4>{{item.courseName}}</h4>
+          <h4 @click="topaperInfo(item.testCode)">{{item.courseName}}</h4>
           <p class="name">{{item.description}}</p>
           <div class="info">
             <i class="iconfont el-icon-date"></i>
@@ -86,7 +86,7 @@ export default {
           }
         }
       );
-      // console.log(res)
+      console.log(res)
       if (res.meta.status == 200) return this.$message.error(res.meta.message);
       this.testInfo = res.data.data;
       this.total = res.data.total;
@@ -102,6 +102,16 @@ export default {
     // 查找试卷
     search() {
       console.log("45");
+    },
+    // 
+    topaperInfo(testCode){
+      console.log(testCode)
+      this.$router.push({
+        path: '/paperInfo',
+        query: {
+          testCode: testCode
+        }
+      })
     }
   }
 };
@@ -140,6 +150,9 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      .icon{
+        margin-right: 10px;
+      }
     }
   }
   .paper {

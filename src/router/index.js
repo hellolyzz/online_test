@@ -16,6 +16,9 @@ import searchTest from '../components/testMng/searchTest'
 import introduceQues from '../components/questionBankMng/introduceQues'
 import myTest from '../components/student/myTest'
 import stuSetting from '../components/student/stuSetting'
+import paperInfo from '../components/student/paperInfo.vue'
+import answering from '../components/student/answering.vue'
+import stuScore from '../components/student/stuScore.vue'
 
 Vue.use(VueRouter)
 
@@ -37,8 +40,21 @@ const routes = [
       {
         path: '/stuSetting',
         component: stuSetting
+      },
+      {
+        path: '/paperInfo',
+        component: paperInfo
+      },
+      {
+        path: '/stuScore',
+        component: stuScore
       }
     ]
+  },
+  // 答题界面
+  {
+    path: '/answering',
+    component: answering
   },
   // 管理后台
   {
