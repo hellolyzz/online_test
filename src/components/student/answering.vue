@@ -111,10 +111,10 @@
             <!-- 选择题 -->
             <div v-if="currentType == 1">
               <el-radio-group v-model="multiRadio[index]" @change="getChangeLabel">
-                <el-radio :label="1">{{showAnswer.optionA}}</el-radio>
-                <el-radio :label="2">{{showAnswer.optionB}}</el-radio>
-                <el-radio :label="3">{{showAnswer.optionC}}</el-radio>
-                <el-radio :label="4">{{showAnswer.optionD}}</el-radio>
+                <el-radio :label="1">A：{{showAnswer.optionA}}</el-radio>
+                <el-radio :label="2">B：{{showAnswer.optionB}}</el-radio>
+                <el-radio :label="3">C：{{showAnswer.optionC}}</el-radio>
+                <el-radio :label="4">D：{{showAnswer.optionD}}</el-radio>
               </el-radio-group>
               <div class="analysis" v-if="isPractice">
                 <ul>
@@ -264,6 +264,7 @@ export default {
     this.getPaperInfo();
     this.getUserInfo();
     this.getPaperDetail();
+    this.showTime();
   },
   methods: {
     // 获取用户信息
@@ -302,8 +303,8 @@ export default {
     },
     // 获取当前试卷信息
     async getPaperInfo() {
-      let date = new Date()
-      this.startTime = this.getTime(date)
+      let date = new Date();
+      this.startTime = this.getTime(date);
       this.testCode = this.$route.query.testCode;
       console.log(this.testCode);
       // const { data: res } = await this.$http.get('http://localhost:3000/')
@@ -313,6 +314,7 @@ export default {
       console.log(res);
       if (res.meta.status !== 200) return this.$message.error(res.meta.message);
       this.paperInfo = res.data;
+      this.time = this.paperInfo.totalTime
     },
     // 获取试卷全部 试题 信息 并初始化首页信息
     async getPaperDetail() {
@@ -522,7 +524,7 @@ export default {
         // console.log(multiAnswer)
       });
       // 计算 判断题 总分
-      let newJudgeAnswer = this.judgeAnswer
+      let newJudgeAnswer = this.judgeAnswer;
       newJudgeAnswer.forEach((item, index) => {
         let option = null;
         switch (item) {
@@ -564,18 +566,22 @@ export default {
             this.endTime = this.getTime(date);
             let answerDate = this.endTime.substr(0, 10);
             //提交成绩信息
-            const { data: res } = await this.$http.post('http://localhost:3000/stuFront/postScore',{
-              params:{
-                testCode: this.testCode,
-                subject: this.paperInfo.courseName,
-                studentId: this.userInfo.id,
-                score: finalScore,
-                answerTime: answerDate
+            const { data: res } = await this.$http.post(
+              "http://localhost:3000/stuFront/postScore",
+              {
+                params: {
+                  testCode: this.testCode,
+                  subject: this.paperInfo.courseName,
+                  studentId: this.userInfo.id,
+                  score: finalScore,
+                  answerTime: answerDate
+                }
               }
-            })
-            console.log(res)
-            if(res.meta.status !== 200) return this.$message.error(res.meta.message)
-            this.$message.success(res.meta.message)
+            );
+            console.log(res);
+            if (res.meta.status !== 200)
+              return this.$message.error(res.meta.message);
+            this.$message.success(res.meta.message);
             this.$router.push({
               path: "/stuScore",
               query: {
@@ -585,13 +591,30 @@ export default {
                 courseName: this.paperInfo.courseName,
                 totalTime: this.paperInfo.totalTime
               }
-            });            
+            });
           })
           .catch(() => {
             console.log("继续答题");
           });
       }
+    },
+    // 倒计时
+    showTime() { 
+      setInterval(() => {
+        this.time -= 1
+        if(this.time == 10) {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            message: '考生注意,考试时间还剩10分钟！！！'
+          })
+          if(this.time == 0) {
+            console.log("考试时间已到,强制交卷。")
+          }
+        }
+      },1000 * 60)
     }
+
   }
 };
 </script>
@@ -653,7 +676,7 @@ ul li {
     padding-left: 20px;
   }
 }
-/* slider过渡效果 */
+// slider过渡效果 
 .slider-fade-enter-active {
   transition: all 0.3s ease;
 }
@@ -666,161 +689,42 @@ ul li {
   opacity: 0;
 }
 
-.operation .end li:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(39, 118, 223);
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  color: #fff;
-}
-.operation .end li {
-  cursor: pointer;
-  margin: 0 100px;
-}
-.operation {
-  background-color: #fff;
-  border-radius: 4px;
-  padding: 10px 0px;
-  margin-right: 10px;
-}
-.operation .end {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(39, 118, 223);
-}
-.content .number {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
-  background-color: rgb(39, 118, 223);
-  border-radius: 4px;
-  margin-right: 4px;
-}
-.content {
-  padding: 0px 20px;
-  .topic {
-    padding: 20px 0px;
-    padding-top: 30px;
-  }
-}
-// .content
-.right .content {
-  background-color: #fff;
-  margin: 10px;
-  margin-left: 0px;
-  height: 470px;
-}
-.content .el-radio-group label {
-  color: #000;
-  margin: 5px 0px;
-}
-.content .el-radio-group {
-  display: flex;
-  flex-direction: column;
-}
-.right .title p {
-  margin-left: 20px;
-}
+
+// 下方答题区域
 .flexarea {
   display: flex;
   .right {
     flex: 1;
   }
 }
-.auto-right {
-  margin-left: auto;
-  color: #2776df;
-  margin-right: 10px;
-}
-.right .title {
-  margin-right: 10px;
-  padding-right: 30px;
-  display: flex;
-  margin-top: 10px;
-  background-color: #fff;
-  height: 50px;
-  line-height: 50px;
-}
-.clearfix {
-  clear: both;
-}
-.l-bottom .final {
-  cursor: pointer;
-  display: inline-block;
-  text-align: center;
-  background-color: rgb(39, 118, 223);
-  width: 240px;
-  margin: 20px 0px 20px 10px;
-  border-radius: 4px;
-  height: 30px;
-  line-height: 30px;
-  color: #fff;
-  margin-top: 22px;
-}
-#answer .left .item {
-  padding: 0px;
-  font-size: 16px;
-}
-.l-bottom {
-  border-radius: 4px;
-  background-color: #fff;
-}
-.l-bottom .item p {
-  margin-bottom: 15px;
-  margin-top: 10px;
-  color: #000;
-  margin-left: 10px;
-  letter-spacing: 2px;
-}
-.l-bottom .item li {
-  width: 15%;
-  margin-left: 5px;
-  margin-bottom: 10px;
-}
-.l-bottom .item {
-  display: flex;
-  flex-direction: column;
-  ul {
-    width: 100%;
-    margin-bottom: -8px;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    li a {
-      position: relative;
-      justify-content: center;
-      display: inline-flex;
-      align-items: center;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background-color: #fff;
-      border: 1px solid #eee;
-      text-align: center;
-      color: #000;
-      font-size: 16px;
-    }
-  }
-}
+
+// 左边选项区域
 .left {
   width: 260px;
   height: 100%;
   margin: 10px 10px 0px 10px;
+  // 左边 上面 4 ge选项部分
   .l-top {
     display: flex;
     justify-content: space-around;
     padding: 16px 0px;
     border: 1px solid #eee;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin: 0px 0px 10px 0px;
     background-color: #fff;
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      a {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #ff90aa;
+      }
+    }
     li:nth-child(2) a {
       border: 1px solid #eee;
     }
@@ -832,6 +736,7 @@ ul li {
       position: relative;
       border: 1px solid #eee;
     }
+    // 利用伪元素给 标记 标识写上一个小圆点
     li:nth-child(4) a::before {
       width: 4px;
       height: 4px;
@@ -843,40 +748,185 @@ ul li {
       left: 16px;
     }
   }
+  // 左边 下面 选项部分
+  .l-bottom {
+    border-radius: 4px;
+    background-color: #fff;
+    .item {
+      display: flex;
+      flex-direction: column;
+      // 选择题部分
+      p {
+        margin-bottom: 15px;
+        margin-top: 10px;
+        color: #000;
+        margin-left: 10px;
+        letter-spacing: 2px;
+      }
+      // 选项部分
+      ul {
+        padding: 0;
+        width: 100%;
+        margin-top: -8px;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        li {
+          width: 15%;
+          margin-left: 5px;
+          margin-bottom: 10px;
+        }
+        li a {
+          position: relative;
+          justify-content: center;
+          display: inline-flex;
+          align-items: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: #fff;
+          border: 1px solid #eee;
+          color: #000;
+          text-decoration: none;
+          font-size: 16px;
+        }
+      }
+    }
+    // 结束考试
+    .final {
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      background-color: rgb(39, 118, 223);
+      width: 240px;
+      margin: 10px 0px 20px 10px;
+      border-radius: 4px;
+      height: 30px;
+      line-height: 30px;
+      color: #fff;
+      margin-top: 22px;
+    }
+  }
 }
 
-.left .l-top li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  a {
-    display: inline-block;
-    padding: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 1px solid #ff90aa;
-  }
-}
-#answer .top {
-  background-color: rgb(39, 118, 223);
-  .item li:nth-child(1) {
+// 右边区域
+.right {
+  .title {
+    border-radius: 4px;
     margin-right: 10px;
+    padding-right: 30px;
+    display: flex;
+    margin-top: 10px;
+    background-color: #fff;
+    height: 50px;
+    line-height: 50px;
+    p {
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+    }
+    .auto-right {
+      margin-left: auto;
+      color: #2776df;
+      margin-right: 10px;
+    }
   }
-  .item li:nth-child(3) {
-    position: relative;
-    margin-left: auto;
+  .content {
+    padding: 0px 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 0px 10px 0 0;
+    height: 470px;
+    .topic {
+      padding: 30px 0px 20px 0;
+      margin: 10px 0;
+      .number {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        background-color: #5f8eb5;
+        border-radius: 4px;
+        margin-right: 4px;
+      }
+    }
+    .el-radio-group {
+      display: flex;
+      flex-direction: column;
+      label {
+        color: #000;
+        margin: 5px 0px;
+      }
+    }
+  }
+  .operation {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 10px 0px;
+    margin: 10px 10px 0 0;
+    .end {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgb(39, 118, 223);
+      li {
+        cursor: pointer;
+        margin: 0 100px;
+      }
+      li:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(39, 118, 223);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: #fff;
+      }
+    }
   }
 }
-#answer .item {
-  color: #fff;
-  display: flex;
-  padding: 20px;
-  font-size: 20px;
+
+#answer {
+  background-color: #eee;
+  .item {
+    color: #fff;
+    display: flex;
+    padding: 20px;
+    font-size: 20px;
+    margin: 0;
+  }
+  .top {
+    background-color: #5f8eb5;
+    .item li:nth-child(1) {
+      margin-right: 10px;
+    }
+    .item li:nth-child(3) {
+      position: relative;
+      margin-left: auto;
+      font-size: 14px;
+    }
+    .item li:nth-child(4) {
+      // position: relative;
+      margin-left: 20px;
+      // vertical-align: center;
+      font-size: 14px;
+      // height: 26px;
+      // line-height: 26xp;
+    }
+
+  }
+  .left .item {
+    padding: 0px;
+    font-size: 16px;
+  }
 }
-#answer .top #answer {
-  padding-bottom: 30px;
-}
+
+// #answer .top #answer {
+//   padding-bottom: 30px;
+// }
 .icon20 {
   font-size: 20px;
   font-weight: bold;

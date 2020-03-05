@@ -9,14 +9,14 @@
       <!-- 搜索区域 -->
       <div class="search">
         <div class="testList">试卷列表</div>
-        <div class="search_box">
+        <!-- <div class="search_box">
           <div class="icon">
             <el-input type="text" placeholder="请输入试卷名称" v-model="key" />
           </div>
           <div>
             <el-button type="primary" icon="el-icon-search" @click="search">搜索试卷</el-button>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- 试卷 -->
       <ul class="paper">
@@ -130,9 +130,10 @@ export default {
 }
 
 .wrapper {
+  padding: 30px;
   .search {
-    border-bottom: 1px solid #c1c1c1;
-    padding: 15px;
+    border-bottom: 1px solid #eee;
+    padding: 0 0 15px;
     // border: 1px solid black;
     display: flex;
     justify-content: space-between;

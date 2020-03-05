@@ -11,14 +11,14 @@
           <li>
             <el-button @click="toTestList">我的试卷</el-button>
           </li>
-          <li>
+          <!-- <li>
             <el-button @click="practice()">我的练习</el-button>
-          </li>
+          </li> -->
           <li>
-            <el-button>查询分数</el-button>
+            <el-button @click="tomyScore">查询分数</el-button>
           </li>
           <li class="right">
-            <span class="welcome_user">欢迎你，{{ this.$store.state.name }}</span>
+            <span class="welcome_user">欢迎你，{{ name }}</span>
           </li>
           <li>
             <el-button @click="setting">设置</el-button>
@@ -38,17 +38,17 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+// import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
-      // name: "",
+      name: "",
       // flag: false
     };
   },
-  computed: mapState({
-    name: state => state.name
-  }),
+  // computed: mapState({
+  //   name: state => state.name
+  // }),
   created() {
     this.userInfo();
   },
@@ -64,7 +64,7 @@ export default {
     },
     // computed:mapState(["isPractice"])
     userInfo() {
-      // this.name = window.sessionStorage.getItem("name");
+      this.name = window.sessionStorage.getItem("name");
     },
     // 退出
     logout() {
@@ -77,6 +77,9 @@ export default {
     },
     toTestList(){
       this.$router.push('/myTest')
+    },
+    tomyScore(){
+      this.$router.push('/myScore')
     }
   }
 };

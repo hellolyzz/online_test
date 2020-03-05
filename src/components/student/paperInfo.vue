@@ -63,7 +63,8 @@ export default {
   data() {
     return {
       testCode: 0,
-      paperInfo: {}
+      paperInfo: {},
+      id: 0
     };
   },
   created() {
@@ -71,13 +72,23 @@ export default {
   },
   methods: {
     async getParperInfo() {
+      this.id = window.sessionStorage.getItem('id')
       this.testCode = this.$route.query.testCode;
-      console.log(this.testCode);
+      // console.log(this.testCode,this.id);
       const { data: res } = await this.$http.get(
-        "http://localhost:3000/stuFront/getPaperInfo/" + this.testCode
+        "http://localhost:3000/stuFront/getPaperInfo/" ,{
+          params: {
+            id: this.id,
+            testCode: this.testCode
+          }
+        }
       );
-      console.log(res);
-      if (res.meta.status !== 200) return this.$message.error(res.meta.message);
+      // console.log(res);
+      if (res.meta.status === 401){
+        this.$message.error(res.meta.message);
+        this.$router.push('/noPaper')
+      }
+      if (res.meta.status === 400) return this.$message.error(res.meta.message);
       this.paperInfo = res.data;
     },
     // 开始答题

@@ -19,6 +19,8 @@ import stuSetting from '../components/student/stuSetting'
 import paperInfo from '../components/student/paperInfo.vue'
 import answering from '../components/student/answering.vue'
 import stuScore from '../components/student/stuScore.vue'
+import myScore from '../components/student/myScore.vue'
+import noPaper from '../components/student/noPaper.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +50,14 @@ const routes = [
       {
         path: '/stuScore',
         component: stuScore
+      },
+      {
+        path: '/myScore',
+        component: myScore
+      },
+      {
+        path: '/noPaper',
+        component: noPaper
       }
     ]
   },
