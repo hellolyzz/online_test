@@ -8,6 +8,8 @@ import './assets/css/global.css'
 import './plugins/element.js'
 // 引入axios
 import axios from 'axios'
+// 引入 echarts
+import echarts from "echarts"
 // 请求超时
 axios.defaults.timeout = 6000 
 // 请求的根路径
@@ -28,5 +30,6 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
+  echarts,
   render: h => h(App)
 }).$mount('#app')

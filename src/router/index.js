@@ -21,10 +21,13 @@ import answering from '../components/student/answering.vue'
 import stuScore from '../components/student/stuScore.vue'
 import myScore from '../components/student/myScore.vue'
 import noPaper from '../components/student/noPaper.vue'
+import queryScore from '../components/scoreMng/queryScore.vue'
+import subjectScore from '../components/scoreMng/subjectScore.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  // 登录界面
   {
     path: '/login',
     component: login
@@ -113,6 +116,14 @@ const routes = [
       {
         path: '/introduceQues',
         component: introduceQues
+      },
+      {
+        path: '/queryScore',
+        component: queryScore
+      },
+      {
+        path: '/subjectScore',
+        component: subjectScore
       }
     ]
   }
