@@ -23,6 +23,10 @@ import myScore from '../components/student/myScore.vue'
 import noPaper from '../components/student/noPaper.vue'
 import queryScore from '../components/scoreMng/queryScore.vue'
 import subjectScore from '../components/scoreMng/subjectScore.vue'
+import queryScoreById from '../components/scoreMng/queryScoreById.vue'
+import studentScore from '../components/scoreMng/studentScore.vue'
+import uploadExcel from '../components/uploadExcel/uploadExcel.vue'
+
 
 Vue.use(VueRouter)
 
@@ -124,6 +128,16 @@ const routes = [
       {
         path: '/subjectScore',
         component: subjectScore
+      },{
+        path: '/queryScoreById',
+        component: queryScoreById
+      },
+      {
+        path: '/studentScore',
+        component: studentScore
+      },{
+        path: '/uploadExcel',
+        component: uploadExcel
       }
     ]
   }

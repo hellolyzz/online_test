@@ -82,6 +82,7 @@
           <span class="footer">
             <el-button @click="multiFormReset">清 空</el-button>
             <el-button type="primary" @click="addMultiQ">确 定</el-button>
+            <el-button type="primary" @click="toBulkImportMulti">批量导入选择题</el-button>
           </span>
         </el-tab-pane>
         <el-tab-pane name="third">
@@ -531,6 +532,15 @@ export default {
         this.$refs.fillFormRef.resetFields();
         this.getNumberQ();
       });
+    },
+    // 跳转到批量导入页面
+    toBulkImportMulti(){
+      this.$router.push({
+        path: '/uploadExcel',
+        query: {
+          paperId: this.paperId
+        }
+      })
     }
   }
 };

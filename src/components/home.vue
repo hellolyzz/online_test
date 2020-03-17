@@ -128,14 +128,14 @@ export default {
           id: 300,
           children: [
             {
-              menuName: "学生成绩查询",
+              menuName: "成绩查询",
               id: 301,
               path: "queryScore"
             },
             {
-              menuName: "成绩分段查询",
+              menuName: "学生成绩查询",
               id: 302,
-              path: "querySubsection"
+              path: "queryScoreById"
             }
           ]
         },
