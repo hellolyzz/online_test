@@ -135,6 +135,7 @@
           <span class="footer">
             <el-button @click="judgeFormReset">清 空</el-button>
             <el-button type="primary" @click="addJudgeQ">确 定</el-button>
+            <el-button type="primary" @click="toBulkImportJudge">批量导入题库</el-button>
           </span>
         </el-tab-pane>
         <el-tab-pane name="fourth">
@@ -179,6 +180,7 @@
           <span class="footer">
             <el-button @click="fillFormReset">清 空</el-button>
             <el-button type="primary" @click="addFillQ">确 定</el-button>
+            <el-button type="primary" @click="toBulkImportFill">批量导入题库</el-button>
           </span>
         </el-tab-pane>
       </el-tabs>
@@ -536,12 +538,28 @@ export default {
     // 跳转到批量导入页面
     toBulkImportMulti(){
       this.$router.push({
-        path: '/uploadExcel',
+        path: '/uploadExcelM',
         query: {
           paperId: this.paperId
         }
       })
-    }
+    },
+    toBulkImportJudge(){
+      this.$router.push({
+        path: '/uploadExcelG',
+        query: {
+          paperId: this.paperId
+        }
+      })
+    },
+     toBulkImportFill(){
+      this.$router.push({
+        path: '/uploadExcelF',
+        query: {
+          paperId: this.paperId
+        }
+      })
+    },
   }
 };
 </script>

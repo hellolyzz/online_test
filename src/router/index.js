@@ -25,7 +25,9 @@ import queryScore from '../components/scoreMng/queryScore.vue'
 import subjectScore from '../components/scoreMng/subjectScore.vue'
 import queryScoreById from '../components/scoreMng/queryScoreById.vue'
 import studentScore from '../components/scoreMng/studentScore.vue'
-import uploadExcel from '../components/uploadExcel/uploadExcel.vue'
+import uploadExcelM from '../components/uploadExcel/uploadExcelM.vue'
+import uploadExcelG from '../components/uploadExcel/uploadExcelG.vue'
+import uploadExcelF from '../components/uploadExcel/uploadExcelF.vue'
 
 
 Vue.use(VueRouter)
@@ -136,8 +138,15 @@ const routes = [
         path: '/studentScore',
         component: studentScore
       },{
-        path: '/uploadExcel',
-        component: uploadExcel
+        path: '/uploadExcelM',
+        component: uploadExcelM
+      },{
+        path: '/uploadExcelG',
+        component: uploadExcelG
+      },
+      {
+        path: '/uploadExcelF',
+        component: uploadExcelF
       }
     ]
   }
