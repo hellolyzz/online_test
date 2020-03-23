@@ -8,9 +8,9 @@
     </el-breadcrumb>
     <!-- 管理员0 登录进来才可以看 -->
     <el-card v-if="role === '0'">
-      <el-button type="primary" @click="addTeaDialog = true" >添加教师</el-button>
+      <el-button type="primary" @click="addTeaDialog = true">添加教师</el-button>
       <!-- 教师信息展示区域 -->
-      <el-table :data="tableData" border style="width: 100%" show-index >
+      <el-table :data="tableData" border style="width: 100%" show-index>
         <!-- <el-table-column type="index" label="#"></el-table-column> -->
         <el-table-column prop="id" label="工号" width="75"></el-table-column>
         <el-table-column prop="name" label="姓名" width="100"></el-table-column>
@@ -48,11 +48,9 @@
     </el-card>
     <!-- 普通教师1 权限 -->
     <el-card class="showInfo" v-else>
-      <div>
-        您的身份是教师，暂无权限查看教师列表。只有管理员才能查看。
-      </div> 
+      <div>您的身份是教师，暂无权限查看教师列表。只有管理员才能查看。</div>
     </el-card>
-     <!-- 新增教师对话框 -->
+    <!-- 新增教师对话框 -->
     <el-dialog title="新增教师" :visible.sync="addTeaDialog" width="50%" @close="closeAddTeaFormDialog">
       <el-form :model="addTeaForm" :rules="addTeaFormRules" ref="addTeaFormRef" label-width="100px">
         <el-form-item prop="id" label="学号" size="mini">
@@ -82,7 +80,7 @@
               :value="item.value"
             ></el-option>
           </el-select>
-        </el-form-item>       
+        </el-form-item>
         <el-form-item prop="tel" label="电话" size="mini">
           <el-input v-model="addTeaForm.tel"></el-input>
         </el-form-item>
@@ -114,7 +112,15 @@
           <el-tag type="primary" v-if="editTeaForm.gender === 1">男</el-tag>
         </el-form-item>
         <el-form-item prop="institute" label="所属学院" size="mini">
-          <el-input v-model="editTeaForm.institute"></el-input>
+          <!-- <el-input v-model="editTeaForm.institute"></el-input> -->
+           <el-select v-model="editTeaForm.institute" placeholder="请选择">
+            <el-option
+              v-for="item in instOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+           </el-select>
         </el-form-item>
         <el-form-item prop="tel" label="电话" size="mini">
           <el-input v-model="editTeaForm.tel"></el-input>
@@ -140,7 +146,7 @@ export default {
         pagesize: 10,
         pagenum: 1
       },
-      addTeaDialog: false, 
+      addTeaDialog: false,
       editTeaDialog: false,
       addTeaForm: {},
       editTeaForm: {},
@@ -164,11 +170,15 @@ export default {
             trigger: ["blur", "change"]
           }
         ],
-         gender: [
-           { required: true, message: "请选择性别", trigger: ["blur", "change"] },
+        gender: [
+          { required: true, message: "请选择性别", trigger: ["blur", "change"] }
         ],
         institute: [
-           { required: true, message: "请选择所在学院", trigger: ["blur", "change"] },
+          {
+            required: true,
+            message: "请选择所在学院",
+            trigger: ["blur", "change"]
+          }
         ],
         tel: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
@@ -196,6 +206,13 @@ export default {
             min: 2,
             max: 10,
             message: "长度在 2 到 10 个字符",
+            trigger: ["blur", "change"]
+          }
+        ],
+        institute: [
+          {
+            required: true,
+            message: "请选择所在学院",
             trigger: ["blur", "change"]
           }
         ],
@@ -245,7 +262,7 @@ export default {
       ],
       // table数据源
       tableData: [],
-      role: ''
+      role: ""
     };
   },
   created() {
@@ -254,25 +271,24 @@ export default {
   methods: {
     // 获取教师信息
     async getTeaInfo() {
-        console.log(this.queryInfo)
-        this.role = window.sessionStorage.getItem('role')
-        console.log(typeof(this.role))
-        const { data: res } = await this.$http.get(
-          'http://127.0.0.1:3000/teamng/teaInfo',
-          {
-            params: this.queryInfo
-          }
-        );
-        console.log(res);
-        if (res.meta.status !== 200) {
-          this.$message.error("获取教师信息失败");
+      console.log(this.queryInfo);
+      this.role = window.sessionStorage.getItem("role");
+      console.log(typeof this.role);
+      const { data: res } = await this.$http.get(
+        "http://127.0.0.1:3000/teamng/teaInfo",
+        {
+          params: this.queryInfo
         }
-        console.log(res);
-        this.tableData = res.data.data;
-        this.total = res.data.total;
-        this.queryInfo.pagesize = res.data.pagesize;
-        this.queryInfo.pagenum = res.data.pagenum;
-      
+      );
+      console.log(res);
+      if (res.meta.status !== 200) {
+        this.$message.error("获取教师信息失败");
+      }
+      console.log(res);
+      this.tableData = res.data.data;
+      this.total = res.data.total;
+      this.queryInfo.pagesize = res.data.pagesize;
+      this.queryInfo.pagenum = res.data.pagenum;
     },
     // 每页展示的条数发生变化
     handleSizeChange(newSize) {
@@ -285,16 +301,19 @@ export default {
       this.getTeaInfo();
     },
     // 关闭新增dialog
-    closeAddTeaFormDialog(){
+    closeAddTeaFormDialog() {
       this.$refs.addTeaFormRef.resetFields();
       this.addTeaDialog = false;
     },
     // 增加教师
-    addTea(){
+    addTea() {
       this.$refs.addTeaFormRef.validate(async valid => {
-        if(!valid) return 
-        const { data: res } = await this.$http.post('http://127.0.0.1:3000/teamng/addTea', this.addTeaForm)
-        console.log(res)
+        if (!valid) return;
+        const { data: res } = await this.$http.post(
+          "http://127.0.0.1:3000/teamng/addTea",
+          this.addTeaForm
+        );
+        console.log(res);
         if (res.meta.status === 401) {
           this.$message.error("您所添加的工号已经存在，请仔细核对之后再添加！");
           this.addTeaDialog = false;
@@ -306,9 +325,9 @@ export default {
           this.addTeaDialog = false;
           this.getTeaInfo();
         }
-      })
+      });
     },
-     // 打开编辑教师信息对话框
+    // 打开编辑教师信息对话框
     async OpenEditTeaForm(scope) {
       console.log(scope.row.id);
       var id = scope.row.id;
@@ -320,27 +339,30 @@ export default {
       this.editTeaDialog = true;
     },
     // 关闭编辑框
-    closeEditTeaForm(){
-      his.$refs.editTeaFormRef.resetFields();
+    closeEditTeaForm() {
+      this.$refs.editTeaFormRef.resetFields();
       this.editTeaDialog = false;
     },
     // 修改教师信息
-    async postEditTeaForm(){
-       const { data: res } = await this.$http.put(
-        "http://127.0.0.1:3000/teamng/editTea",
-        {
-          params: this.editTeaForm
+    postEditTeaForm() {
+      this.$refs.editTeaFormRef.validate(async valid => {
+        if(!valid) return 
+        const { data: res } = await this.$http.put(
+          "http://127.0.0.1:3000/teamng/editTea",
+          {
+            params: this.editTeaForm
+          }
+        );
+        console.log(res);
+        if (res.meta.status !== 200) {
+          this.$message.error("修改教师信息失败");
         }
-      );
-      console.log(res);
-      if (res.meta.status !== 200) {
-        this.$message.error("修改教师信息失败");
-      }
-      this.$message.success("修改教师信息成功");
-      this.editTeaDialog = false;
-      this.getTeaInfo();
+        this.$message.success("修改教师信息成功");
+        this.editTeaDialog = false;
+        this.getTeaInfo();
+      });
     },
-     // 删除教师信息
+    // 删除教师信息
     deleteInfo(scope) {
       this.$confirm(
         "您确定要删除该教师吗？此操作一旦执行无法撤回，请谨慎操作！",
@@ -357,23 +379,19 @@ export default {
             "http://127.0.0.1:3000/teamng/deleteInfo/" + id
           );
           console.log(res);
-          if(res.meta.status !== 200){
+          if (res.meta.status !== 200) {
             this.$message.error("删除教师信息失败");
           }
-          this.$message.success('删除教师信息成功')
-          this.getTeaInfo()
+          this.$message.success("删除教师信息成功");
+          this.getTeaInfo();
         })
         .catch(action => {
           this.$message({
             type: "info",
-            message:
-              action === "cancel" ? "放弃删除" : ''
+            message: action === "cancel" ? "放弃删除" : ""
           });
         });
-
-      
     }
-
   }
 };
 </script>
@@ -382,7 +400,7 @@ export default {
 .el-table {
   margin-top: 15px;
 }
-.showInfo{
+.showInfo {
   display: flex;
   justify-content: center;
   align-content: center;

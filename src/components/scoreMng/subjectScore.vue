@@ -6,7 +6,7 @@
       <el-breadcrumb-item>成绩管理</el-breadcrumb-item>
       <el-breadcrumb-item>成绩查询</el-breadcrumb-item>
       <el-breadcrumb-item>当前学科</el-breadcrumb-item>
-      <el-breadcrumb-item class="subjcet">{{ subject }}</el-breadcrumb-item>
+      <el-breadcrumb-item class="subjcet">{{ subject ? subject : '无成绩' }}</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
       <div class="showword">

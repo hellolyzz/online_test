@@ -9,7 +9,7 @@
         </li>
         <li>{{paperInfo.courseName}}考试</li>
         <li>姓名：{{userInfo.name}}</li>
-        <li>准考证号: {{userInfo.id}}</li>
+        <li>学号: {{userInfo.id}}</li>
       </ul>
     </div>
     <div class="flexarea">
@@ -261,8 +261,8 @@ export default {
     };
   },
   created() {
-    this.getPaperInfo();
     this.getUserInfo();
+    this.getPaperInfo();
     this.getPaperDetail();
     this.showTime();
   },
@@ -303,14 +303,19 @@ export default {
     },
     // 获取当前试卷信息
     async getPaperInfo() {
+      console.log(this.userInfo.id)
       let date = new Date();
       this.startTime = this.getTime(date);
       this.testCode = this.$route.query.testCode;
       console.log(this.testCode);
       // const { data: res } = await this.$http.get('http://localhost:3000/')
       const { data: res } = await this.$http.get(
-        "http://localhost:3000/stuFront/getPaperInfo/" + this.testCode
-      );
+        "http://localhost:3000/stuFront/getPaperInfo/" ,{
+          params: {
+            id: this.userInfo.id,
+            testCode: this.testCode
+          }
+        });
       console.log(res);
       if (res.meta.status !== 200) return this.$message.error(res.meta.message);
       this.paperInfo = res.data;

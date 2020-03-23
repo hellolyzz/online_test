@@ -32,7 +32,8 @@ import { Button,
   RadioGroup,
   DatePicker,
   Row,
-  Col
+  Col,
+  Tooltip
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -67,5 +68,6 @@ Vue.use(RadioGroup)
 Vue.use(DatePicker)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Tooltip)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

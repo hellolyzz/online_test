@@ -1,5 +1,5 @@
 <template>
-<!-- 学生管理 -->
+  <!-- 学生管理 -->
   <div class="stuMng_box">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/welcome' }">人员管理</el-breadcrumb-item>
@@ -68,8 +68,7 @@
           </el-select>
         </el-form-item>
         <el-form-item prop="institute" label="所属学院" size="mini">
-          <!-- <el-input v-model="addStuForm.institute"></el-input> -->
-          <el-select v-model="addStuForm.institute" placeholder="请选择">
+          <el-select v-model="addStuForm.institute" placeholder="请选择" @change="getinst($event)">
             <el-option
               v-for="item in instOptions"
               :key="item.value"
@@ -79,10 +78,16 @@
           </el-select>
         </el-form-item>
         <el-form-item prop="major" label="专业" size="mini">
-          <el-input v-model="addStuForm.major"></el-input>
+          <el-select v-model="addStuForm.major" placeholder="请选择">
+            <el-option
+              v-for="item in majorOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item prop="grade" label="年级" size="mini">
-          <!-- <el-input v-model="addStuForm.grade"></el-input> -->
           <el-select v-model="addStuForm.grade" placeholder="请选择">
             <el-option
               v-for="item in gradeOptions"
@@ -125,30 +130,42 @@
           <el-tag type="primary" v-if="editStuForm.gender === 0">女</el-tag>
           <el-tag type="primary" v-if="editStuForm.gender === 1">男</el-tag>
         </el-form-item>
-        <el-form-item prop="institute" label="所属学院" size="mini">
+        <!-- <el-form-item prop="institute" label="所属学院" size="mini">
           <el-input v-model="editStuForm.institute"></el-input>
-          <!-- <el-select v-model="editStuForm.institute" placeholder="请选择">
+        </el-form-item>
+        <el-form-item prop="major" label="专业" size="mini">
+          <el-input v-model="editStuForm.major"></el-input>
+        </el-form-item> -->
+        <el-form-item prop="institute" label="所属学院" size="mini">
+          <el-select v-model="editStuForm.institute" placeholder="请选择" @change="getinst($event)">
             <el-option
               v-for="item in instOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
-          </el-select>-->
+          </el-select>
         </el-form-item>
         <el-form-item prop="major" label="专业" size="mini">
-          <el-input v-model="editStuForm.major"></el-input>
+          <el-select v-model="editStuForm.major" placeholder="请选择">
+            <el-option
+              v-for="item in majorOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item prop="grade" label="年级" size="mini">
-          <el-input v-model="editStuForm.grade"></el-input>
-          <!-- <el-select v-model="editStuForm.grade" placeholder="请选择">
+          <!-- <el-input v-model="editStuForm.grade"></el-input> -->
+          <el-select v-model="editStuForm.grade" placeholder="请选择">
             <el-option
               v-for="item in gradeOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
-          </el-select>-->
+          </el-select>
         </el-form-item>
         <el-form-item prop="class" label="班级" size="mini">
           <el-input v-model="editStuForm.class"></el-input>
@@ -208,6 +225,35 @@ export default {
           value: "数学学院"
         }
       ],
+      // 专业select
+      majorOptions: [],
+      // 专业select联动 数组
+      majorSelect: [
+        {
+          pro: '计算机学院',label: '软件工程', value: '软件工程'
+        },
+        {
+          pro: '计算机学院', label: '计算机科学与技术', value: '计算机科学与技术'
+        },
+        {
+          pro: '计算机学院', label: '信息安全管理', value: '信息安全管理'
+        },
+        {
+          pro: '外国语学院', label: '日语', value: '日语'
+        },
+        {
+          pro: '外国语学院', label: '英语', value: '英语'
+        },
+        {
+          pro: '外国语学院', label: '德语', value: '德语'
+        },
+        {
+          pro: '数学学院', label: '数学教育', value: '数学教育'
+        },
+        {
+          pro: '数学学院' , label: '金融数学', value: '金融数学'
+        }
+      ],
       // 年级select
       gradeOptions: [
         {
@@ -235,7 +281,9 @@ export default {
       addStuDialog: false,
       editStuDialog: false,
       // 增加学生
-      addStuForm: {},
+      addStuForm: {
+        major: ''
+      },
       // 增加学生验证规则
       addStuFormRules: {
         id: [
@@ -257,13 +305,28 @@ export default {
           }
         ],
         grade: [
-           { required: true, message: "请选择所在年级", trigger: ["blur", "change"] },
+          {
+            required: true,
+            message: "请选择所在年级",
+            trigger: ["blur", "change"]
+          }
         ],
         gender: [
-           { required: true, message: "请选择性别", trigger: ["blur", "change"] },
+          { required: true, message: "请选择性别", trigger: ["blur", "change"] }
         ],
         institute: [
-           { required: true, message: "请选择所在学院", trigger: ["blur", "change"] },
+          {
+            required: true,
+            message: "请选择所在学院",
+            trigger: ["blur", "change"]
+          }
+        ],
+        major: [
+          {
+            required: true,
+            message: "请选择所在专业",
+            trigger: ["blur", "change"]
+          }
         ],
         class: [
           { required: true, message: "请输入所在班级", trigger: "blur" },
@@ -314,6 +377,27 @@ export default {
             max: 1
           }
         ],
+         institute: [
+          {
+            required: true,
+            message: "请选择所在学院",
+            trigger: ["blur", "change"]
+          }
+        ],
+        major: [
+          {
+            required: true,
+            message: "请选择所在专业",
+            trigger: ["blur", "change"]
+          }
+        ],
+        grade: [
+          {
+            required: true,
+            message: "请选择所在年级",
+            trigger: ["blur", "change"]
+          }
+        ],
         tel: [
           { required: true, message: "请输入手机号码", trigger: "blur" },
           {
@@ -339,6 +423,24 @@ export default {
     this.getStuInfo();
   },
   methods: {
+    // 新增 编辑 学生 二级联动select
+    getinst(prop){
+      this.majorOptions = []
+      this.addStuForm.major = null
+      this.editStuForm.major = null
+      var arr = []
+      for(var val of this.majorSelect){
+        if(prop === val.pro){
+          // console.log(val)
+          arr.push({
+            label: val.label,
+            value: val.value
+            })
+          console.log(arr)
+        }
+        this.majorOptions = arr
+      }
+    },
     async getStuInfo() {
       const { data: res } = await this.$http.get(
         "http://127.0.0.1:3000/stuBack/stuInfo",
@@ -406,20 +508,23 @@ export default {
       this.editStuDialog = true;
     },
     // 编辑学生信息，提交学生信息
-    async postEditStuForm() {
-      const { data: res } = await this.$http.put(
-        "http://127.0.0.1:3000/stuBack/editStu",
-        {
-          params: this.editStuForm
+    postEditStuForm() {
+      this.$refs.editStuFormRef.validate(async valid => {
+        if(!valid) return 
+        const { data: res } = await this.$http.put(
+          "http://127.0.0.1:3000/stuBack/editStu",
+          {
+            params: this.editStuForm
+          }
+        );
+        console.log(res);
+        if (res.meta.status !== 200) {
+          this.$message.error("修改学生信息失败");
         }
-      );
-      console.log(res);
-      if (res.meta.status !== 200) {
-        this.$message.error("修改学生信息失败");
-      }
-      this.$message.success("修改学生信息成功");
-      this.editStuDialog = false;
-      this.getStuInfo();
+        this.$message.success("修改学生信息成功");
+        this.editStuDialog = false;
+        this.getStuInfo();
+      });
     },
     // 关闭学生对话框
     closeEditStuForm() {
@@ -447,21 +552,18 @@ export default {
             "http://127.0.0.1:3000/stuBack/deleteInfo/" + id
           );
           console.log(res);
-          if(res.meta.status !== 200){
+          if (res.meta.status !== 200) {
             this.$message.error("删除学生信息失败");
           }
-          this.$message.success('删除学生信息成功')
-          this.getStuInfo()
+          this.$message.success("删除学生信息成功");
+          this.getStuInfo();
         })
         .catch(action => {
           this.$message({
             type: "info",
-            message:
-              action === "cancel" ? "放弃删除" : ''
+            message: action === "cancel" ? "放弃删除" : ""
           });
         });
-
-      
     }
   }
 };

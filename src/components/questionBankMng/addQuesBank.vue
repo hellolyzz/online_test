@@ -11,13 +11,98 @@
       <el-tabs v-model="activeName">
         <el-tab-pane name="first">
           <span slot="label">当前试卷概况</span>
-          <ul>
+          <ul class="overview">
             <li>试卷名称：{{ courseName }}</li>
             <li>试卷编号：{{ paperId }}</li>
-            <li>选择题：{{ totalM }}个（建议在20个以内）</li>
-            <li>判断题：{{ totalJ }}个（建议在10个以内）</li>
-            <li>填空题：{{ totalF }}个（建议在10个以内）</li>
-            <li>*增加题目之后刷新页面再查看当前试卷的数量。</li>
+            <li>当前题目数量：</li>
+            <li>选择题：{{ totalM }}个（数量在20个以内）</li>
+            <li>判断题：{{ totalJ }}个（数量在10个以内）</li>
+            <li>填空题：{{ totalF }}个（数量在10个以内）</li>
+            <li class="bulkImport">*批量增加时候注意事项：</li>
+            <li>添加选择题的时候，表头格式应该为：</li>
+            <li>
+              <el-tooltip class="item" effect="dark" content="题号" placement="top">
+                <el-button size="mini">questionId</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属科目" placement="top">
+                <el-button size="mini">subject</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="题目" placement="top">
+                <el-button size="mini">question</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="选项A" placement="top">
+                <el-button size="mini">optionA</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="选项B" placement="top">
+                <el-button size="mini">optionB</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="选项C" placement="top">
+                <el-button size="mini">optionC</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="选项D" placement="top">
+                <el-button size="mini">optionD</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="正确答案" placement="top">
+                <el-button size="mini">answer</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="解析" placement="top">
+                <el-button size="mini">analysis</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属章节" placement="top">
+                <el-button size="mini">section</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="难易程度" placement="top">
+                <el-button size="mini">level</el-button>
+              </el-tooltip>
+            </li>
+            <li>添加判断题的时候，表头格式应该为：</li>
+            <li>
+              <el-tooltip class="item" effect="dark" content="题号" placement="top" visible-arrow="false">
+                <el-button size="mini">questionId</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属科目" placement="top">
+                <el-button size="mini">subject</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="题目" placement="top">
+                <el-button size="mini">question</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="正确答案" placement="top">
+                <el-button size="mini">answer</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="解析" placement="top">
+                <el-button size="mini">analysis</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属章节" placement="top">
+                <el-button size="mini">section</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="难易程度" placement="top">
+                <el-button size="mini">level</el-button>
+              </el-tooltip>
+            </li>
+            <li>添加填空题的时候，表头格式应该为：</li>
+            <li>
+              <el-tooltip class="item" effect="dark" content="题号" placement="top">
+                <el-button size="mini">questionId</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属科目" placement="top">
+                <el-button size="mini">subject</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="题目" placement="top">
+                <el-button size="mini">question</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="正确答案" placement="top">
+                <el-button size="mini">answer</el-button>
+              </el-tooltip>
+               <el-tooltip class="item" effect="dark" content="解析" placement="top">
+                <el-button size="mini">analysis</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="所属章节" placement="top">
+                <el-button size="mini">section</el-button>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="难易程度" placement="top">
+                <el-button size="mini">level</el-button>
+              </el-tooltip>
+            </li>
           </ul>
         </el-tab-pane>
         <el-tab-pane name="second">
@@ -536,30 +621,30 @@ export default {
       });
     },
     // 跳转到批量导入页面
-    toBulkImportMulti(){
+    toBulkImportMulti() {
       this.$router.push({
-        path: '/uploadExcelM',
+        path: "/uploadExcelM",
         query: {
           paperId: this.paperId
         }
-      })
+      });
     },
-    toBulkImportJudge(){
+    toBulkImportJudge() {
       this.$router.push({
-        path: '/uploadExcelG',
+        path: "/uploadExcelG",
         query: {
           paperId: this.paperId
         }
-      })
+      });
     },
-     toBulkImportFill(){
+    toBulkImportFill() {
       this.$router.push({
-        path: '/uploadExcelF',
+        path: "/uploadExcelF",
         query: {
           paperId: this.paperId
         }
-      })
-    },
+      });
+    }
   }
 };
 </script>
@@ -571,5 +656,16 @@ li {
 .footer {
   display: flex;
   justify-content: center;
+}
+.overview {
+  font-size: 13px;
+  li {
+    margin-top: 5px;
+  }
+  .bulkImport {
+    color: red;
+    font-size: 16px;
+    margin-top: 20px;
+  }
 }
 </style>
