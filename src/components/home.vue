@@ -28,8 +28,8 @@
           <div class="toggle-button" @click="toggleCollapse">|||</div>
           <el-menu
             text-color="#fff"
-            background-color="#4c6c96"
-            active-text-color="#124280"
+            background-color="#333"
+            active-text-color="#ffd04b"
             :default-active="activePath"
             router
             unique-opened
@@ -195,7 +195,7 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #4c6c96;
+  background-color: #333;
   font-size: 20px;
   color: #fff;
   display: flex;
@@ -215,10 +215,10 @@ export default {
   }
 }
 .el-aside {
-  background-color: #4c6c96;
+  background-color: #333;
   .el-menu {
     border-right: 0;
-    background-color: #4c6c96;
+    background-color: #333;
     // background-color: #ffd04b;
   }
 }
@@ -231,7 +231,7 @@ export default {
   cursor: pointer;
 }
 .el-main {
-  background-color: #eaedf1;
+  background-color: rgb(230, 227, 227);
 }
 .welcomeText{
   font-size: 15px;

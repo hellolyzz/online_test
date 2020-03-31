@@ -2,7 +2,7 @@
   <div class="myScore_box">
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/myTest' }">考试系统</el-breadcrumb-item>
-      <el-breadcrumb-item>我的成绩</el-breadcrumb-item>
+      <el-breadcrumb-item>查询分数</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="wrapper">
       <!-- <div class="title">

@@ -1,7 +1,7 @@
 <!--学生考试首页-->
 <template>
   <div id="student">
-    <el-row class="padding-50">
+    <el-row class="nav">
       <el-col :span="24">
         <ul class="list">
           <li class="logo">
@@ -9,31 +9,30 @@
             <span>OnlineTest</span>
           </li>
           <li>
-            <el-button @click="toTestList">我的试卷</el-button>
+            <a href="javascript:;" @click="toTestList">试卷列表</a>
           </li>
           <!-- <li>
             <el-button @click="practice()">我的练习</el-button>
-          </li> -->
+          </li>-->
           <li>
-            <el-button @click="tomyScore">查询分数</el-button>
+            <a href="javascript:;" @click="tomyScore">查询分数</a>
           </li>
           <li class="right">
             <span class="welcome_user">欢迎你，{{ name }}</span>
           </li>
           <li>
-            <el-button @click="setting">设置</el-button>
+            <a href="javascript:;" @click="setting">设  置</a>
           </li>
           <li>
-            <el-button type="info" @click="logout">退出</el-button>
+            <a href="javascript:;" @click="logout">退  出</a>
           </li>
         </ul>
       </el-col>
     </el-row>
     <!-- 主体区域 -->
-      <el-main>
-        <router-view></router-view>
-      </el-main>
-    <!-- <v-footer></v-footer> -->
+    <el-main>
+      <router-view></router-view>
+    </el-main>
   </div>
 </template>
 
@@ -42,7 +41,7 @@
 export default {
   data() {
     return {
-      name: "",
+      name: ""
       // flag: false
     };
   },
@@ -53,14 +52,14 @@ export default {
     this.userInfo();
   },
   methods: {
-    add(){
+    add() {
       // this.$store.commit('add'); //mutation 中的方法
-      this.$store.dispatch('addFun')
+      this.$store.dispatch("addFun");
     },
-    reduce(){
+    reduce() {
       // this.$store.commit('reduce');
       var n = 10;
-      this.$store.dispatch('reduceFun',n)
+      this.$store.dispatch("reduceFun", n);
     },
     // computed:mapState(["isPractice"])
     userInfo() {
@@ -71,15 +70,15 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
-    setting(){
+    setting() {
       // console.log('45')
-      this.$router.push('/stuSetting')
+      this.$router.push("/stuSetting");
     },
-    toTestList(){
-      this.$router.push('/myTest')
+    toTestList() {
+      this.$router.push("/myTest");
     },
-    tomyScore(){
-      this.$router.push('/myScore')
+    tomyScore() {
+      this.$router.push("/myScore");
     }
   }
 };
@@ -89,15 +88,19 @@ export default {
 .right .icon {
   margin-right: 6px;
 }
-#student .padding-50 {
+#student .nav {
   margin: 0 auto;
   padding: 0 50px;
-  box-shadow: 0 0 10px 4px rgba(1, 149, 255, 0.1);
-  background-color: #fff;
+  box-shadow: 0 0 4px rgba(1, 149, 255, 0.1);
+  background-color: #333;
 }
 .list a {
   text-decoration: none;
-  color: #334046;
+  color: #fff;
+  font-weight: 600;
+}
+ul{
+  margin: 10px;
 }
 li {
   list-style: none;
@@ -109,58 +112,35 @@ li {
 }
 #student .list li {
   padding: 0 20px;
-  cursor: pointer;
 }
-#student .list li:hover {
-  background-color: #0195ff;
-  transition: all 2s ease;
+#student .list li:nth-child(2):hover,
+#student .list li:nth-child(3):hover,
+#student .list li:nth-child(5):hover,
+#student .list li:nth-child(6):hover {
+  background-color: #ffd04b;
+  border-radius: 30px;
 }
 #student .list li:hover a {
-  color: #fff;
+  color: #333;
+  font-weight: 600;
 }
 #student .list .right {
   margin-left: auto;
   position: relative;
-}
-#student .list li.right :hover a {
-  color: #000;
+  .welcome_user {
+    font-size: 16px;
+    color: #ffd04b;
+  }
 }
 #student .list .logo {
   display: flex;
   font-weight: bold;
-  color: #2f6c9f;
-}
-#student .list .logo i {
-  font-size: 50px;
-}
-.right .msg {
-  text-align: center;
-  position: absolute;
-  top: 60px;
-  left: 0px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 2px;
-  border-bottom: 3px solid #0195ff;
-  background-color: #fff;
-}
-.right .msg p {
-  height: 40px;
-  line-height: 40px;
-  width: 105px;
-}
-.right .msg p:hover {
-  background-color: #0195ff;
-}
-.welcome_user {
-  font-size: 15px;
-}
-.right {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  color: #fff;
+  i {
+    font-size: 50px;
+  }
 }
 .el-main {
-  background-color: #eaedf1;
+  background-color: rgb(230, 227, 227);
 }
 </style>

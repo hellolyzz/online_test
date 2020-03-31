@@ -332,7 +332,7 @@ export default {
       // res.data 是一个二维数组[[选择题{},{},{}],[判断题{,{}}],[填空题{},{}]]
       if (res.meta.status !== 200) return this.$message.error(res.meta.message);
       this.paperPart = { ...res.data }; //对象
-      var ArrPart = Object.keys(this.paperPart);
+      // var ArrPart = Object.keys(this.paperPart);
       // console.log(this.paperPart)
       // console.log(ArrPart)
       // 生成二维数组 father 存放填空题答案

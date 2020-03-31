@@ -33,7 +33,9 @@ import { Button,
   DatePicker,
   Row,
   Col,
-  Tooltip
+  Tooltip,
+  Steps,
+  Step
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -69,5 +71,7 @@ Vue.use(DatePicker)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Tooltip)
+Vue.use(Steps)
+Vue.use(Step)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

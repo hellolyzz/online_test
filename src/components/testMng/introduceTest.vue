@@ -4,11 +4,16 @@
       <el-breadcrumb-item :to="{ path: '/welcome' }">考试管理</el-breadcrumb-item>
       <el-breadcrumb-item>功能介绍</el-breadcrumb-item>
     </el-breadcrumb>
-    <div class="content">
-      教师创建试卷，学生可在自己主页看到可答题的试卷，并选择相应试卷进行答题。
-      有考试安排表以后，才能给该次考试添加试题，考试信息对应的数据表是tb_testmanage。
-      该表保存了此次考试编号、试卷编号、课程名称、考试时间、考试类型、所属学院、专业等信息。
-    </div>
+    <el-card>
+      <div class="content">
+        <el-steps :active="2" align-center>
+          <el-step title="步骤 1" description="教师创建试卷"></el-step>
+          <el-step title="步骤 2" description="为试卷添加试题（可修改试题）"></el-step>
+          <el-step title="步骤 3" description="学生端看见未作答试题进行答题"></el-step>
+          <el-step title="步骤 4" description="答题完毕上传成绩"></el-step>
+        </el-steps>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -22,14 +27,8 @@ export default {
 
 <style lang="less" scoped>
 .content {
-  margin-left: 40px;
-  width: 600px;
-  background-color: rgb(236, 248, 255);
-  padding: 16px 32px;
-  border-radius: 4px;
-  // border-left: 5px solid rgb(80, 191, 255);
-  border-left: 5px solid #4c6c96;
-  margin: 20px 0px;
+  padding: 16px 10px;
+  // border: 1px solid rgb(80, 191, 255);
 }
 </style>
 

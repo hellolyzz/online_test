@@ -101,12 +101,12 @@ ul li {
   }
 }
 .paperInfo .item:hover {
-  box-shadow: 0 0 4px 2px rgba(140, 193, 248, 0.45);
+  box-shadow: 0 0 4px 2px #333;
   transform: scale(1.03);
 }
 .paperInfo .item {
   width: 380px;
-  border-radius: 4px;
+  border-radius: 40px;
   padding: 20px 30px;
   border: 1px solid #eee;
   box-shadow: 0 0 4px 2px rgba(217, 222, 234, 0.3);
