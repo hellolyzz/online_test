@@ -629,15 +629,15 @@ ul li {
   list-style: none;
 }
 .iconfont.icon-time {
-  color: #2776df;
+  color: #333;
   margin: 0px 6px 0px 20px;
 }
 .analysis {
   margin-top: 20px;
   .right {
-    color: #2776df;
+    color: #333;
     font-size: 18px;
-    border: 1px solid #2776df;
+    border: 1px solid #333;
     padding: 0px 6px;
     border-radius: 4px;
     margin-left: 20px;
@@ -669,7 +669,7 @@ ul li {
   border: 1px solid #ff90aa !important;
 }
 .bg {
-  background-color: #5188b8 !important;
+  background-color: #333 !important;
 }
 .fill .el-input {
   display: inline-flex;
@@ -734,7 +734,7 @@ ul li {
       border: 1px solid #eee;
     }
     li:nth-child(3) a {
-      background-color: #5188b8;
+      background-color: #333;
       border: none;
     }
     li:nth-child(4) a {
@@ -790,8 +790,8 @@ ul li {
           height: 30px;
           border-radius: 50%;
           background-color: #fff;
-          border: 1px solid #eee;
-          color: #000;
+          border: 1px solid #eeeeee;
+          color: #ffd04b;
           text-decoration: none;
           font-size: 16px;
         }
@@ -802,7 +802,7 @@ ul li {
       cursor: pointer;
       display: inline-block;
       text-align: center;
-      background-color: rgb(39, 118, 223);
+      background-color: #333;
       width: 240px;
       margin: 10px 0px 20px 10px;
       border-radius: 4px;
@@ -832,7 +832,7 @@ ul li {
     }
     .auto-right {
       margin-left: auto;
-      color: #2776df;
+      color: #333;
       margin-right: 10px;
     }
   }
@@ -846,12 +846,13 @@ ul li {
       padding: 30px 0px 20px 0;
       margin: 10px 0;
       .number {
+        color: #ffd04b;
         display: inline-flex;
         justify-content: center;
         align-items: center;
         width: 20px;
         height: 20px;
-        background-color: #5f8eb5;
+        background-color: #333;
         border-radius: 4px;
         margin-right: 4px;
       }
@@ -874,7 +875,7 @@ ul li {
       display: flex;
       justify-content: center;
       align-items: center;
-      color: rgb(39, 118, 223);
+      color: #333;
       li {
         cursor: pointer;
         margin: 0 100px;
@@ -884,7 +885,7 @@ ul li {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: rgb(39, 118, 223);
+        background-color: #333;
         border-radius: 50%;
         width: 50px;
         height: 50px;
@@ -904,7 +905,7 @@ ul li {
     margin: 0;
   }
   .top {
-    background-color: #5f8eb5;
+    background-color: #333;
     .item li:nth-child(1) {
       margin-right: 10px;
     }

@@ -128,7 +128,7 @@ export default {
 <style lang="less" scoped>
 .login_container {
   height: 100%;
-  background-color: #c3c8d6;
+  background-color: rgb(230, 227, 227);
 }
 .login_box {
   width: 450px;
@@ -173,16 +173,17 @@ export default {
   justify-content: center;
 }
 .tips_box {
-  border-radius: 4px;
-  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 20px ;
   display: flex;
   position: fixed;
-  right: 20px;
-  bottom: 50%;
+  bottom: 27%;
+  right: 20%;
   flex-direction: column;
-  color: #606266;
+  // color: #606266;
   background-color: #fff;
-  border-left: 4px solid #409eff;
+  // border-left: 4px solid #409eff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 }
 </style>

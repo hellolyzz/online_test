@@ -111,11 +111,11 @@ export default {
     }
     .showtip {
       border-bottom: 1px solid #cccccc;
-      color: #36aafd;
+      color: #333;
       padding: 10px 0;
     }
     .border {
-      border: 6px solid #36aafd !important;
+      border: 6px solid #ffd04b !important;
       transition: all 2s ease;
       width: 160px !important;
       height: 160px !important;

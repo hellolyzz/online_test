@@ -60,7 +60,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="institute" label="考试学院">
+        <!-- <el-form-item prop="institute" label="考试学院">
           <el-input v-model="addForm.institute"></el-input>
         </el-form-item>
         <el-form-item prop="major" label="专业">
@@ -68,6 +68,37 @@
         </el-form-item>
         <el-form-item prop="grade" label="年级">
           <el-input v-model="addForm.grade"></el-input>
+        </el-form-item> -->
+        <el-form-item prop="institute" label="所属学院" >
+          <el-select v-model="addForm.institute" placeholder="请选择" @change="getinst($event)">
+            <el-option
+              v-for="item in instOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="major" label="专业" >
+          <el-select v-model="addForm.major" placeholder="请选择">
+            <el-option
+              v-for="item in majorOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="grade" label="年级" >
+          <!-- <el-input v-model="addForm.grade"></el-input> -->
+          <el-select v-model="addForm.grade" placeholder="请选择">
+            <el-option
+              v-for="item in gradeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item prop="type" label="考试类型">
           <el-select v-model="addForm.type">
@@ -115,6 +146,73 @@ export default {
     //     }, 1000);
     //   };
     return {
+      // 学院select
+      instOptions: [
+        {
+          label: "计算机学院",
+          value: "计算机学院"
+        },
+        {
+          label: "外国语学院",
+          value: "外国语学院"
+        },
+        {
+          label: "数学学院",
+          value: "数学学院"
+        }
+      ],
+      // 专业select
+      majorOptions: [],
+      // 专业select联动 数组
+      majorSelect: [
+        {
+          pro: '计算机学院',label: '软件工程', value: '软件工程'
+        },
+        {
+          pro: '计算机学院', label: '计算机科学与技术', value: '计算机科学与技术'
+        },
+        {
+          pro: '计算机学院', label: '信息安全管理', value: '信息安全管理'
+        },
+        {
+          pro: '外国语学院', label: '日语', value: '日语'
+        },
+        {
+          pro: '外国语学院', label: '英语', value: '英语'
+        },
+        {
+          pro: '外国语学院', label: '德语', value: '德语'
+        },
+        {
+          pro: '数学学院', label: '数学教育', value: '数学教育'
+        },
+        {
+          pro: '数学学院' , label: '金融数学', value: '金融数学'
+        }
+      ],
+      // 年级select
+      gradeOptions: [
+        {
+          label: "2016",
+          value: "2016"
+        },
+        {
+          label: "2017",
+          value: "2017"
+        },
+        {
+          label: "2018",
+          value: "2018"
+        },
+        {
+          label: "2019",
+          value: "2019"
+        },
+        {
+          label: "2020",
+          value: "2020"
+        }
+      ],
       // 设置禁用过期时间
       pickerOptions: {
         disabledDate: time => {
@@ -264,6 +362,23 @@ export default {
     };
   },
   methods: {
+    // 新增 编辑 学生 二级联动select
+    getinst(prop){
+      this.majorOptions = []
+      // this.addForm.major = null
+      var arr = []
+      for(var val of this.majorSelect){
+        if(prop === val.pro){
+          // console.log(val)
+          arr.push({
+            label: val.label,
+            value: val.value
+            })
+          console.log(arr)
+        }
+        this.majorOptions = arr
+      }
+    },
     getTime(value) {
       let secondTime = parseInt(value); // 秒
       let minuteTime = 0; // 分
