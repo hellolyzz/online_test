@@ -7,6 +7,7 @@
     </el-breadcrumb>
     <el-card>
       <el-button type="primary" @click="addStuDialog = true">添加学生</el-button>
+      <el-button type="primary" @click="bulkAddStu">批量添加学生</el-button>
       <!-- 学生信息展示区域 -->
       <el-table :data="tableData" border style="width: 100%" show-index>
         <!-- <el-table-column type="index" label="#"></el-table-column> -->
@@ -67,7 +68,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item prop="institute" label="所属学院" size="mini">
+        <el-form-item prop="institute" label="所属学院" size="mini" v-if="role === 0">
           <el-select v-model="addStuForm.institute" placeholder="请选择" @change="getinst($event)">
             <el-option
               v-for="item in instOptions"
@@ -135,7 +136,7 @@
         </el-form-item>
         <el-form-item prop="major" label="专业" size="mini">
           <el-input v-model="editStuForm.major"></el-input>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item prop="institute" label="所属学院" size="mini">
           <el-select v-model="editStuForm.institute" placeholder="请选择" @change="getinst($event)">
             <el-option
@@ -190,6 +191,9 @@
 export default {
   data() {
     return {
+      // 当前权限
+      role: 0,
+      institute: "",
       // 编辑学生
       editStuForm: {},
       // table获取到的总页数
@@ -230,28 +234,44 @@ export default {
       // 专业select联动 数组
       majorSelect: [
         {
-          pro: '计算机学院',label: '软件工程', value: '软件工程'
+          pro: "计算机学院",
+          label: "软件工程",
+          value: "软件工程"
         },
         {
-          pro: '计算机学院', label: '计算机科学与技术', value: '计算机科学与技术'
+          pro: "计算机学院",
+          label: "计算机科学与技术",
+          value: "计算机科学与技术"
         },
         {
-          pro: '计算机学院', label: '信息安全管理', value: '信息安全管理'
+          pro: "计算机学院",
+          label: "信息安全管理",
+          value: "信息安全管理"
         },
         {
-          pro: '外国语学院', label: '日语', value: '日语'
+          pro: "外国语学院",
+          label: "日语",
+          value: "日语"
         },
         {
-          pro: '外国语学院', label: '英语', value: '英语'
+          pro: "外国语学院",
+          label: "英语",
+          value: "英语"
         },
         {
-          pro: '外国语学院', label: '德语', value: '德语'
+          pro: "外国语学院",
+          label: "德语",
+          value: "德语"
         },
         {
-          pro: '数学学院', label: '数学教育', value: '数学教育'
+          pro: "数学学院",
+          label: "数学教育",
+          value: "数学教育"
         },
         {
-          pro: '数学学院' , label: '金融数学', value: '金融数学'
+          pro: "数学学院",
+          label: "金融数学",
+          value: "金融数学"
         }
       ],
       // 年级select
@@ -282,7 +302,7 @@ export default {
       editStuDialog: false,
       // 增加学生
       addStuForm: {
-        major: ''
+        major: ""
       },
       // 增加学生验证规则
       addStuFormRules: {
@@ -377,7 +397,7 @@ export default {
             max: 1
           }
         ],
-         institute: [
+        institute: [
           {
             required: true,
             message: "请选择所在学院",
@@ -423,36 +443,42 @@ export default {
     this.getStuInfo();
   },
   methods: {
+    // 批量导入学生
+    bulkAddStu(){
+      this.$router.push('/uploadExcelStu')
+    },
     // 新增 编辑 学生 二级联动select
-    getinst(prop){
-      this.majorOptions = []
-      this.addStuForm.major = null
-      this.editStuForm.major = null
-      var arr = []
-      for(var val of this.majorSelect){
-        if(prop === val.pro){
+    getinst(prop) {
+      this.majorOptions = [];
+      this.addStuForm.major = null;
+      this.editStuForm.major = null;
+      var arr = [];
+      for (var val of this.majorSelect) {
+        if (prop === val.pro) {
           // console.log(val)
           arr.push({
             label: val.label,
             value: val.value
-            })
-          console.log(arr)
+          });
+          console.log(arr);
         }
-        this.majorOptions = arr
+        this.majorOptions = arr;
       }
     },
     async getStuInfo() {
+      this.role = window.sessionStorage.getItem("role");
+      this.institute = window.sessionStorage.getItem("institute");
+      // console.log(this.role,this.institute);
       const { data: res } = await this.$http.get(
-        "http://127.0.0.1:3000/stuBack/stuInfo",
+        "http://127.0.0.1:3000/stuBack/stuInfo/" + this.institute,
         {
           params: this.queryInfo
         }
       );
-      // console.log(res);
+      console.log(res);
       if (res.meta.status !== 200) {
         this.$message.error("获取学生信息失败");
       }
-      console.log(res);
       this.tableData = res.data.data;
       this.total = res.data.total;
       this.queryInfo.pagesize = res.data.pagesize;
@@ -510,7 +536,7 @@ export default {
     // 编辑学生信息，提交学生信息
     postEditStuForm() {
       this.$refs.editStuFormRef.validate(async valid => {
-        if(!valid) return 
+        if (!valid) return;
         const { data: res } = await this.$http.put(
           "http://127.0.0.1:3000/stuBack/editStu",
           {

@@ -28,6 +28,7 @@ import studentScore from '../components/scoreMng/studentScore.vue'
 import uploadExcelM from '../components/uploadExcel/uploadExcelM.vue'
 import uploadExcelG from '../components/uploadExcel/uploadExcelG.vue'
 import uploadExcelF from '../components/uploadExcel/uploadExcelF.vue'
+import uploadExcelStu from '../components/uploadExcel/uploadExcelStu.vue'
 
 
 Vue.use(VueRouter)
@@ -147,6 +148,10 @@ const routes = [
       {
         path: '/uploadExcelF',
         component: uploadExcelF
+      },
+      {
+        path: '/uploadExcelStu',
+        component: uploadExcelStu
       }
     ]
   }

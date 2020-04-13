@@ -6,7 +6,27 @@
       <el-breadcrumb-item>考试查询</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card>
-      <el-form :inline="true" :model="searchForm" class="demo-form-inline">
+      <el-form :inline="true" :model="searchForm">
+        <!-- <el-form-item prop="institute" label="所属学院">
+          <el-select v-model="searchForm.institute" placeholder="请选择">
+            <el-option
+              v-for="item in instOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="年级">
+          <el-select v-model="searchForm.grade" placeholder="请选择年级">
+            <el-option
+              v-for="item in gradeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item> -->
         <el-form-item label="考试编号">
           <el-input v-model="searchForm.testCode" placeholder="请输入考试编号查询"></el-input>
         </el-form-item>
@@ -16,6 +36,7 @@
         <el-form-item>
           <el-button type="primary" @click="getAllInfo">获取所有试卷</el-button>
         </el-form-item>
+        
       </el-form>
       <ul class="paperInfo">
         <li class="item" v-for="item in testInfo" :key="item.testCode">
@@ -68,6 +89,46 @@
 export default {
   data() {
     return {
+      role: 0,
+      institute: '',
+      // 学院select
+      instOptions: [
+        {
+          label: "计算机学院",
+          value: "计算机学院"
+        },
+        {
+          label: "外国语学院",
+          value: "外国语学院"
+        },
+        {
+          label: "数学学院",
+          value: "数学学院"
+        }
+      ],
+      // 年级select
+      gradeOptions: [
+        {
+          label: "2016",
+          value: "2016"
+        },
+        {
+          label: "2017",
+          value: "2017"
+        },
+        {
+          label: "2018",
+          value: "2018"
+        },
+        {
+          label: "2019",
+          value: "2019"
+        },
+        {
+          label: "2020",
+          value: "2020"
+        }
+      ],
       showInfo: false,
       testInfo: [],
       total: 0,
@@ -84,8 +145,10 @@ export default {
   },
   methods: {
     async getTestInfo() {
+       this.role = window.sessionStorage.getItem("role");
+      this.institute = window.sessionStorage.getItem("institute");
       const { data: res } = await this.$http.get(
-        "http://127.0.0.1:3000/ques/TestInfo",
+        "http://127.0.0.1:3000/ques/TestInfo/" + this.institute,
         {
           params: this.queryInfo
         }
@@ -107,7 +170,7 @@ export default {
     },
     // 根据考试编号查询考试信息
     async onSubmit() {
-      // console.log(this.searchForm)
+      console.log(this.searchForm)
       var testCode = this.searchForm.testCode;
       console.log(testCode);
       // if(testCode){

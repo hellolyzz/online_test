@@ -49,24 +49,27 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
+      role: 0,
+      institute: "",
       tableData: [],
       queryInfo: {
         pagenum: 1,
-        pagesize: 10,
+        pagesize: 10
       },
       total: 0
-
-    }
+    };
   },
   created() {
     this.getStuInfo();
   },
   methods: {
     async getStuInfo() {
+      this.role = window.sessionStorage.getItem("role");
+      this.institute = window.sessionStorage.getItem("institute");
       const { data: res } = await this.$http.get(
-        "http://127.0.0.1:3000/stuBack/stuInfo",
+        "http://127.0.0.1:3000/stuBack/stuInfo/" + this.institute,
         {
           params: this.queryInfo
         }
@@ -92,21 +95,19 @@ export default {
       this.getStuInfo();
     },
     // 查看成绩byid
-     queryScoreById(scope){
+    queryScoreById(scope) {
       // console.log(scope.row.id)
       var id = scope.row.id;
       this.$router.push({
-        path: '/studentScore',
-        query:{
+        path: "/studentScore",
+        query: {
           id: id
         }
-      })
-      
-    } 
+      });
+    }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
-
 </style>

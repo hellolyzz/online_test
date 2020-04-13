@@ -39,6 +39,8 @@
 export default {
   data() {
     return {
+      role: 0,
+      institute: '',
       testInfo: [],
       total: 0,
       queryInfo: {
@@ -53,8 +55,10 @@ export default {
   },
   methods: {
     async getTestInfo() {
+       this.role = window.sessionStorage.getItem("role");
+      this.institute = window.sessionStorage.getItem("institute");
       const { data: res } = await this.$http.get(
-        "http://127.0.0.1:3000/ques/TestInfo",
+        "http://127.0.0.1:3000/ques/TestInfo/" + this.institute,
         {
           params: this.queryInfo
         }

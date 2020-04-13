@@ -12,7 +12,7 @@
       </div>
       <el-table :data="tableData" style="width: 45%" stripe border>
         <el-table-column label="考试编号" width="180" prop="testCode"></el-table-column>
-        <el-table-column label="考试名称" width="180" prop="subject"></el-table-column>
+        <el-table-column label="考试名称" width="180" prop="courseName"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" @click="handleShow(scope.row)">查看</el-button>
@@ -37,6 +37,8 @@
 export default {
   data() {
     return {
+      role: 0,
+      institute: '',
       total: 0,
       tableData: [],
       testCode: 0,
@@ -52,9 +54,11 @@ export default {
   methods: {
     // 获取存在的学科
     async getSubject() {
+      this.role = window.sessionStorage.getItem('role')
+      this.institute = window.sessionStorage.getItem('institute')
       console.log(this.queryInfo)
       const { data: res } = await this.$http.get(
-        "http://localhost:3000/scoreMng/", 
+        "http://localhost:3000/scoreMng/" + this.institute, 
         {
           params: this.queryInfo
         }

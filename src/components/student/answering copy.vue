@@ -16,45 +16,24 @@
       <!--左边题目编号区-->
       <transition name="slider-fade">
         <div class="left" v-if="slider_flag">
-          <div class="l-top">
-            <div class="icon">
-              <ul class="icontips">
-                <li>
-                  <a href="javascript:;"></a>
-                  <span>当前</span>
-                </li>
-                <li>
-                  <a href="javascript:;"></a>
-                  <span>未答</span>
-                </li>
-                <li>
-                  <a href="javascript:;"></a>
-                  <span>已答</span>
-                </li>
-                <li>
-                  <a href="javascript:;"></a>
-                  <span>标记</span>
-                </li>
-              </ul>
-            </div>
-            <div class="wordtips">
-              <ul class="end">
-                <li @click="previous()">
-                  <i class="iconfont icon-previous"></i>
-                  <span>上一题</span>
-                </li>
-                <li @click="mark()">
-                  <i class="iconfont icon-mark-o"></i>
-                  <span>标记</span>
-                </li>
-                <li @click="next()">
-                  <span>下一题</span>
-                  <i class="iconfont icon-next"></i>
-                </li>
-              </ul>
-            </div>
-          </div>
-
+          <ul class="l-top">
+            <li>
+              <a href="javascript:;"></a>
+              <span>当前</span>
+            </li>
+            <li>
+              <a href="javascript:;"></a>
+              <span>未答</span>
+            </li>
+            <li>
+              <a href="javascript:;"></a>
+              <span>已答</span>
+            </li>
+            <li>
+              <a href="javascript:;"></a>
+              <span>标记</span>
+            </li>
+          </ul>
           <div class="l-bottom">
             <!-- 选择题 -->
             <div class="item">
@@ -108,7 +87,7 @@
                 </li>
               </ul>
             </div>
-            <!-- <div class="final" @click="commit()">结束考试</div> -->
+            <div class="final" @click="commit()">结束考试</div>
           </div>
         </div>
       </transition>
@@ -200,7 +179,20 @@
             </div>
           </div>
           <div class="operation">
-            <div class="final" @click="commit()">结束考试</div>
+            <ul class="end">
+              <li @click="previous()">
+                <i class="iconfont icon-previous"></i>
+                <span>上一题</span>
+              </li>
+              <li @click="mark()">
+                <i class="iconfont icon-mark-o"></i>
+                <span>标记</span>
+              </li>
+              <li @click="next()">
+                <span>下一题</span>
+                <i class="iconfont icon-next"></i>
+              </li>
+            </ul>
           </div>
         </div>
       </transition>
@@ -311,25 +303,23 @@ export default {
     },
     // 获取当前试卷信息
     async getPaperInfo() {
-      console.log(this.userInfo.id);
+      console.log(this.userInfo.id)
       let date = new Date();
       this.startTime = this.getTime(date);
       this.testCode = this.$route.query.testCode;
       console.log(this.testCode);
       // const { data: res } = await this.$http.get('http://localhost:3000/')
       const { data: res } = await this.$http.get(
-        "http://localhost:3000/stuFront/getPaperInfo/",
-        {
+        "http://localhost:3000/stuFront/getPaperInfo/" ,{
           params: {
             id: this.userInfo.id,
             testCode: this.testCode
           }
-        }
-      );
+        });
       console.log(res);
       if (res.meta.status !== 200) return this.$message.error(res.meta.message);
       this.paperInfo = res.data;
-      this.time = this.paperInfo.totalTime;
+      this.time = this.paperInfo.totalTime
     },
     // 获取试卷全部 试题 信息 并初始化首页信息
     async getPaperDetail() {
@@ -614,21 +604,22 @@ export default {
       }
     },
     // 倒计时
-    showTime() {
+    showTime() { 
       setInterval(() => {
-        this.time -= 1;
-        if (this.time == 10) {
+        this.time -= 1
+        if(this.time == 10) {
           this.$message({
             showClose: true,
-            type: "error",
-            message: "考生注意,考试时间还剩10分钟！！！"
-          });
-          if (this.time == 0) {
-            console.log("考试时间已到,强制交卷。");
+            type: 'error',
+            message: '考生注意,考试时间还剩10分钟！！！'
+          })
+          if(this.time == 0) {
+            console.log("考试时间已到,强制交卷。")
           }
         }
-      }, 1000 * 60);
+      },1000 * 60)
     }
+
   }
 };
 </script>
@@ -690,7 +681,7 @@ ul li {
     padding-left: 20px;
   }
 }
-// slider过渡效果
+// slider过渡效果 
 .slider-fade-enter-active {
   transition: all 0.3s ease;
 }
@@ -702,6 +693,7 @@ ul li {
   transform: translateX(-100px);
   opacity: 0;
 }
+
 
 // 下方答题区域
 .flexarea {
@@ -716,86 +708,51 @@ ul li {
   width: 260px;
   height: 100%;
   margin: 10px 10px 0px 10px;
-  // 上面展示标记部分
+  // 左边 上面 4 ge选项部分
   .l-top {
-    // border: 1px solid black;
-    background-color: #fff;
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding: 16px 0px;
+    border: 1px solid #eee;
     border-radius: 4px;
-    // 左边 上面 4 ge选项部分
-    .icon {
-      .icontips {
-        display: flex;
-        justify-content: space-around;
-        padding: 16px 0px;
-        // border: 1px solid #eee;
-        border-radius: 4px;
-        margin: 0px;
-        li {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-          a {
-            display: inline-block;
-            padding: 10px;
-            // border-radius: 50%;
-            background-color: #fff;
-            border: 1px solid #ff90aa;
-          }
-        }
-        li:nth-child(2) a {
-          border: 1px solid #eee;
-        }
-        li:nth-child(3) a {
-          background-color: #333;
-          border: none;
-        }
-        li:nth-child(4) a {
-          position: relative;
-          border: 1px solid #eee;
-        }
-        // 利用伪元素给 标记 标识写上一个小圆点
-        li:nth-child(4) a::before {
-          width: 4px;
-          height: 4px;
-          content: " ";
-          position: absolute;
-          background-color: red;
-          border-radius: 50%;
-          top: 0px;
-          left: 16px;
-        }
+    margin: 0px 0px 10px 0px;
+    background-color: #fff;
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      a {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #ff90aa;
       }
     }
-    .wordtips {
-      // border: 1px solid green;
-      padding-bottom: 10px;
-      font-size: 14px;
-      .end {
-        padding: 0;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        color: #333;
-        li {
-          cursor: pointer;
-        }
-        li:nth-child(2) {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          background-color: #333;
-          border-radius: 50%;
-          width: 50px;
-          height: 50px;
-          color: #fff;
-        }
-      }
+    li:nth-child(2) a {
+      border: 1px solid #eee;
+    }
+    li:nth-child(3) a {
+      background-color: #333;
+      border: none;
+    }
+    li:nth-child(4) a {
+      position: relative;
+      border: 1px solid #eee;
+    }
+    // 利用伪元素给 标记 标识写上一个小圆点
+    li:nth-child(4) a::before {
+      width: 4px;
+      height: 4px;
+      content: " ";
+      position: absolute;
+      background-color: red;
+      border-radius: 50%;
+      top: 0px;
+      left: 16px;
     }
   }
-
   // 左边 下面 选项部分
   .l-bottom {
     border-radius: 4px;
@@ -831,7 +788,7 @@ ul li {
           align-items: center;
           width: 30px;
           height: 30px;
-          // border-radius: 50%;
+          border-radius: 50%;
           background-color: #fff;
           border: 1px solid #eeeeee;
           color: #ffd04b;
@@ -840,7 +797,20 @@ ul li {
         }
       }
     }
-
+    // 结束考试
+    .final {
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      background-color: #333;
+      width: 240px;
+      margin: 10px 0px 20px 10px;
+      border-radius: 4px;
+      height: 30px;
+      line-height: 30px;
+      color: #fff;
+      margin-top: 22px;
+    }
   }
 }
 
@@ -901,21 +871,26 @@ ul li {
     border-radius: 4px;
     padding: 10px 0px;
     margin: 10px 10px 0 0;
-    display: flex;
-    justify-content: center;
-    // 结束考试
-    .final {
-      cursor: pointer;
-      display: inline-block;
-      text-align: center;
-      background-color: #333;
-      width: 240px;
-      padding: 5px;
-      margin: 40px 10px ;
-      border-radius: 4px;
-      height: 30px;
-      line-height: 30px;
-      color: #fff;
+    .end {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      li {
+        cursor: pointer;
+        margin: 0 100px;
+      }
+      li:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #333;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        color: #fff;
+      }
     }
   }
 }
@@ -947,6 +922,7 @@ ul li {
       // height: 26px;
       // line-height: 26xp;
     }
+
   }
   .left .item {
     padding: 0px;
